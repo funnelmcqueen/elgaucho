@@ -1477,6 +1477,10 @@ html:not(.js) .filmstrip__row figure, .filmstrip.is-static .filmstrip__row figur
 .vault__cta { margin-top: 22px; }
 .vault__cta .btn, .cocina__tasting-cta .btn { display: inline-block; }
 .footer__fine { font-size: 13px; color: var(--cinder); }
+/* the maker's credit: quieter than the restaurant's own fine print */
+.footer__by { margin-top: 10px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; }
+.footer__by a { color: var(--bronze-text); transition: color 0.3s ease; }
+.footer__by a:hover { color: var(--brasa); }
 
 /* ============================================================
    REVEAL SAFETY NETS (JS sets real initial states)
