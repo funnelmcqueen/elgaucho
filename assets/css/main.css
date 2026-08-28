@@ -911,6 +911,9 @@ html:not(.js) .loader, .is-static-page .loader { display: none; }
      at the scale the corridor is drawn there they sit outside the frame */
   .t3d__vaultL2, .t3d__vaultR2 { display: none; }
 }
+/* the lite corridor: the arches still come at you out of the dark, but the
+   stone surfaces that hold nearly all the texture memory are not drawn */
+.cantina.is-lite .t3d__plane { display: none; }
 .t3d__seg {
   position: absolute; left: 50%; top: 56%;
   width: min(880px, 74vw); aspect-ratio: 5 / 6;

@@ -579,17 +579,24 @@
     var rail = document.getElementById('descentRail');
     var mm = gsap.matchMedia();
 
-    /* The drawn corridor is eight large 3D surfaces held in one perspective.
-       On a phone that is enough compositing to have the tab killed outright,
-       which takes the whole page with it, so phones get the flat telling of
-       the same section instead: the text, the vault photographs, no descent.
-       A section that reads is worth more than one that crashes. */
-    mm.add('(max-width: 760px), (max-height: 560px)', function () {
+    /* The drawn corridor is eight large 3D surfaces held in one perspective,
+       which is enough compositing to have a phone kill the tab. Phones get the
+       flat telling by default, but ?tunnel=lite and ?tunnel=full force the
+       descent back on so a real phone can be tested against it:
+         lite — the arches, the plaques, the fog and the rails, without the
+                wall, floor and vault surfaces that carry nearly all the weight
+         full — exactly what the desktop draws                                */
+    var tunnelMode = new URLSearchParams(window.location.search).get('tunnel');
+    if (tunnelMode === 'lite') section.classList.add('is-lite');
+    var FLAT_Q = tunnelMode ? '(max-height: 0px)' : '(max-width: 760px), (max-height: 560px)';
+    var LIVE_Q = tunnelMode ? '(min-width: 1px)' : '(min-width: 761px) and (min-height: 561px)';
+
+    mm.add(FLAT_Q, function () {
       section.classList.add('is-static');
       return function () { section.classList.remove('is-static'); };
     });
 
-    mm.add('(min-width: 761px) and (min-height: 561px)', function () {
+    mm.add(LIVE_Q, function () {
       section.classList.remove('is-static');
       var N = segs.length, CYC = 2.2;
       var planes = Array.prototype.slice.call(tunnel.querySelectorAll('.t3d__plane'));
