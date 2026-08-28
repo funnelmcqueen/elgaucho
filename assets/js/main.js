@@ -65,13 +65,13 @@
 
   /* the hero gallery he throws the rope at */
   var DISHES = [
-    { src: 'assets/img/steak-plate.jpg',
+    { src: 'assets/img/steak-plate.webp',
       alt: 'Sliced steak plated with grilled vegetables', cap: 'Bife &middot; a la parrilla' },
-    { src: 'assets/img/chorizo.jpg',
+    { src: 'assets/img/chorizo.webp',
       alt: 'Grilled chorizo with a bowl of sauce and toasted bread', cap: 'Chorizo &middot; para empezar' },
-    { src: 'assets/img/pasta-tagliatelle.jpg',
+    { src: 'assets/img/pasta-tagliatelle.webp',
       alt: 'Tagliatelle with beef and peppers', cap: 'Tagliatelle &middot; de la cocina' },
-    { src: 'assets/img/strip-jamon-carve.jpg',
+    { src: 'assets/img/strip-jamon-carve.webp',
       alt: 'Jamon being carved by hand', cap: 'Jam&oacute;n &middot; cortado a mano' }
   ];
 
@@ -149,10 +149,10 @@
      PRELOADER — real progress + minimum runtime + watchdog
      ---------------------------------------------------------- */
   var CRITICAL = [
-    'assets/img/hero-asado.jpg',
-    'assets/img/steak-plate.jpg',
-    'assets/img/raw-cuts-wide.jpg',
-    'assets/img/chef-fire.jpg'
+    'assets/img/hero-asado.webp',
+    'assets/img/steak-plate.webp',
+    'assets/img/raw-cuts-wide.webp',
+    'assets/img/chef-fire.webp'
   ];
 
   var seenBefore = false;
