@@ -354,7 +354,11 @@
   var heroSplit = null;
   var emberApi = null;
   var heroExit = 0; // 0 at rest, 1 when the dive out of the hero completes
-  gsap.set(['#heroRider', '#heroEyebrow', '#heroSub', '#heroCta', '#heroPlate', '#nav'], { autoAlpha: 0 });
+  /* The bar is NOT hidden here. It used to be, and only the hero entrance
+     ever brought it back -- so every page without a hero, and every visitor
+     with reduced motion, got no header at all. Whatever hides it must be the
+     thing that shows it again. */
+  gsap.set(['#heroRider', '#heroEyebrow', '#heroSub', '#heroCta', '#heroPlate'], { autoAlpha: 0 });
   gsap.set('#heroPlate', { y: 26 });
 
   function buildHeroSplit() {
@@ -383,6 +387,7 @@
      beyond the edge and the room lights up behind him
      ---------------------------------------------------------- */
   function entrance() {
+    gsap.set('#nav', { autoAlpha: 0 });   // it rides in with everything else
     if (!heroSplit) buildHeroSplit();
     heroRiderH = mountHorse('heroRider', window.innerWidth < 760);
     navRiderH = mountHorse('navRider', false);
@@ -1289,7 +1294,7 @@
     window.addEventListener('scroll', function () {
       nav.classList.toggle('is-scrolled', window.scrollY > 60);
     }, { passive: true });
-    if (isStatic) nav.style.opacity = '1';
+    if (isStatic) gsap.set(nav, { autoAlpha: 1 });
 
     document.querySelectorAll('a[href^="#"]').forEach(function (a) {
       a.addEventListener('click', function (e) {
