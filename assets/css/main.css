@@ -1008,6 +1008,16 @@ html.has-wordmark .hero__titleText {
   transform: translateX(-50%);
   background: radial-gradient(50% 42% at 50% 18%, rgba(200, 174, 136, 0.82), rgba(200, 174, 136, 0.18) 55%, transparent 78%);
 }
+/* The footer mark is the drawn logo, which rides. The flat image inside it is
+   the fallback for anyone without JavaScript -- it must give way the moment
+   its own animated version mounts, or the footer carries the same logo twice,
+   one stacked under the other. The ratio is the artwork's own, so hiding the
+   image does not collapse the box the SVG fills. */
+.footer__gaucho { cursor: pointer; }
+.footer__gaucho.has-anim { aspect-ratio: 3040 / 1077; }
+.footer__gaucho.has-anim .footer__logo { display: none; }
+.footer__gaucho svg { display: block; width: 100%; height: 100%; }
+
 .tunnel__label {
   position: absolute; left: 50%; top: 52%;
   font-family: var(--serif); font-style: italic;
