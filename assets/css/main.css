@@ -906,51 +906,72 @@ html:not(.js) .loader, .is-static-page .loader { display: none; }
 /* outer facets run wide so their edges tuck behind the wall tops --
    no daylight at the springing line */
 .t3d__vaultL2, .t3d__vaultR2 { width: 340px; }
-@media (max-width: 760px) {
-  /* two more 340x5400 surfaces is memory a phone does not have to spare, and
-     at the scale the corridor is drawn there they sit outside the frame */
+/* A ladder of corridors, so a real phone can be walked up it until it breaks.
+   Layer pixels each level costs on a phone, after sizeCorridor() trims:
+     lite   arches only ................................  0
+     floor  + the flagstones ..........................  1.5M
+     vault  + the barrel overhead .....................  2.5M
+     full   + both walls ..............................  4.4M
+   (Before the trim the full corridor was 12.9M -- about 465MB of layer
+   backing on an iPhone at 3x -- which is what was killing the tab.) */
+.cantina.t-lite .t3d__plane { display: none; }
+.cantina.t-floor .t3d__wallL,
+.cantina.t-floor .t3d__wallR,
+.cantina.t-floor .t3d__vault { display: none; }
+.cantina.t-vault .t3d__wallL,
+.cantina.t-vault .t3d__wallR { display: none; }
+/* while the visitor is pinch-zoomed in, the stone is not what they are
+   reading, and a zoomed re-raster of it is what a phone cannot afford */
+.cantina.is-zoomed .t3d__plane { display: none; }
+
+/* PHONES AND SHORT WINDOWS: the corridor, cut to what the screen can see.
+   The passage runs from z=-900 (far, into the haze) to z=+3300 -- most of
+   every surface sits BEHIND the camera, and on a phone the walls also leave
+   the frame sideways long before they near it. sizeCorridor() in main.js
+   anchors each surface's far edge (walls -900, floor -1400, vault -968: the
+   rows where their own fades reach solid) and trims the near edge to where
+   that device stops being able to see it. This block holds only what CSS can
+   pin statically: the wall height, and every fade fixed in px from the far
+   edge so none of them stretch with the resized surface. The media condition
+   must stay identical to FLAT_Q in main.js. */
+@media (max-width: 760px), (max-height: 560px) {
   .t3d__vaultL2, .t3d__vaultR2 { display: none; }
-}
-/* the lite corridor: the arches still come at you out of the dark, but the
-   stone surfaces that hold nearly all the texture memory are not drawn */
-.cantina.is-lite .t3d__plane { display: none; }
-
-/* PHONES: the same corridor, cut to the length you can actually see.
-   A wall was 4200x1400 and ran from z -3300 to +900, but nothing past about
-   -1800 is ever anything but fog. Trimming every surface to that window takes
-   the section from roughly 22 million layer pixels to 8.5 million, which is
-   the difference between a phone drawing this and a phone dying on it. */
-@media (max-width: 760px) {
-  /* The wall runs along a different axis than the floor, and shortening it
-     walked it out of the frame, so it is only cut in height -- which never
-     touches how far down the passage it reaches. 1100 still spans floor to
-     springing with room over. */
-  .t3d__wallL, .t3d__wallR { height: 1100px; }
-  .t3d__floor { height: 2000px; transform: translate(-50%, -50%) rotateX(90deg) translateZ(-480px) translateY(800px); }
-  .t3d__vault { height: 2000px; }
-  .t3d__vaultC  { transform: translate(-50%, -50%) translateY(-106px) rotateZ(0deg) rotateX(90deg) translateZ(473px) translateY(800px); }
-  .t3d__vaultL1 { transform: translate(-50%, -50%) translateY(-106px) rotateZ(-34deg) rotateX(90deg) translateZ(473px) translateY(800px); }
-  .t3d__vaultR1 { transform: translate(-50%, -50%) translateY(-106px) rotateZ(34deg) rotateX(90deg) translateZ(473px) translateY(800px); }
-
-  /* The distance fog is a gradient measured as a percentage of the surface it
-     sits on, so a shorter surface made the stone go black metres from your
-     face. Each fade is pinned back to the pixel length it had before and slid
-     so it still starts at the same point down the passage. */
-  .t3d__wallL, .t3d__wallR { background-size: auto, auto, 592px 1100px, 344px 232px, auto; }
-  .t3d__floor {
-    background-size: 100% 5400px, auto, 960px 592px, 336px 336px, auto;
-    background-position: 0 -2200px, 0 0, 0 var(--walk), 0 var(--walk), 0 0;
+  .t3d__wallL, .t3d__wallR {
+    height: 1100px;
+    /* layer 1 -- the old fade, which lives entirely on the invisible
+       behind-camera end -- is pinned at its desktop length so it stays off
+       the visible strip exactly as it does on desktop */
+    background-size: 4200px 100%, auto, 592px 1100px, 344px 232px, auto;
   }
+  /* the fog blob is small on a phone, so the walls' far edge needs its own
+     haze: solid at z=-900, open air 800px in. Painted inside the wall's own
+     surface, not as a new composited layer. */
+  .t3d__wallR::after, .t3d__wallL::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(90deg, #060808 0px, rgba(6, 8, 8, 0.55) 200px, rgba(6, 8, 8, 0) 800px);
+  }
+  .t3d__wallL::after {
+    background: linear-gradient(270deg, #060808 0px, rgba(6, 8, 8, 0.55) 200px, rgba(6, 8, 8, 0) 800px);
+  }
+  /* floor: its top edge stays at z=-1400, exactly where the desktop element
+     top sits, so pinning the % gradients to a 5400px box reproduces the
+     desktop haze stop for stop and the tile phases match desktop unchanged */
+  .t3d__floor {
+    background-size: 100% 5400px, auto, 960px 592px, 336px 336px, 100% 5400px;
+  }
+  /* vault: its top edge sits at z=-968, 432px past the desktop top -- the
+     exact row its gradient reaches solid -- so the pinned boxes and the
+     streamed tiles shift by that constant and register with desktop */
   .t3d__vaultC {
-    background-size: 100% 5400px, 344px 232px, auto;
-    background-position: 0 -2200px, 0 var(--walk), 0 0;
+    background-size: 100% 5400px, 344px 232px, 100% 5400px;
+    background-position: 0 -432px, 0 calc(var(--walk) - 432px), 0 -432px;
   }
   .t3d__vaultL1, .t3d__vaultR1 {
-    background-size: 100% 5400px, 292px 592px, 344px 232px, auto;
-    background-position: 0 -2200px, 0 var(--walk), 0 var(--walk), 0 0;
+    background-size: 100% 5400px, 292px 592px, 344px 232px, 100% 5400px;
+    background-position: 0 -432px, 0 calc(var(--walk) - 432px), 0 calc(var(--walk) - 432px), 0 -432px;
   }
   .t3d__vaultL1 {
-    background-position: 0 -2200px, 0 calc(var(--walk) + 296px), 0 var(--walk), 0 0;
+    background-position: 0 -432px, 0 calc(var(--walk) - 136px), 0 calc(var(--walk) - 432px), 0 -432px;
   }
 }
 .t3d__seg {

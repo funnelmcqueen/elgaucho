@@ -587,7 +587,7 @@
                 wall, floor and vault surfaces that carry nearly all the weight
          full — exactly what the desktop draws                                */
     var tunnelMode = new URLSearchParams(window.location.search).get('tunnel');
-    if (tunnelMode === 'lite') section.classList.add('is-lite');
+    if (tunnelMode) section.classList.add('t-' + tunnelMode);
     var FLAT_Q = tunnelMode ? '(max-height: 0px)' : '(max-width: 760px), (max-height: 560px)';
     var LIVE_Q = tunnelMode ? '(min-width: 1px)' : '(min-width: 761px) and (min-height: 561px)';
 
@@ -607,6 +607,104 @@
       var deep = window.innerWidth <= 760 ? 1600 : 2400;
       var Z_FAR = -deep, Z_TRAVEL = deep + 260;
       var L_FAR = -deep * 0.79, L_TRAVEL = deep * 0.79 + 180;
+
+      /* ------------------------------------------------------
+         THE CORRIDOR, CUT TO WHAT THE SCREEN CAN SEE.
+         The passage runs from z=-900 (far) to z=+3300; the viewer sits at
+         z=+520 (the perspective length), so most of every stone surface is
+         behind the camera, and on a narrow screen the walls also leave the
+         frame sideways (the floor below, the vault above) long before they
+         near it. A point at depth z projects with scale 520/(520-z), and the
+         world is scaled 2D by cam about the origin at 56% height -- so each
+         surface's exit depth is computable exactly. Each surface keeps its
+         far edge anchored where its fade reaches solid (walls -900, floor
+         -1400, vault -968) and is trimmed to its exit depth plus a margin
+         for the camera sway. Phone layer memory drops about 3x; nothing
+         that was ever visible is lost. The fades are pinned in px in the
+         matching CSS media block -- the two conditions must stay identical.
+         ------------------------------------------------------ */
+      var D = 520, WALL_FAR = -900, FLOOR_FAR = -1400, VAULT_FAR = -968;
+      var MX = 40, MY = 24; // screen-px margins covering sway, rotateY and roll
+      var wallLEl = tunnel.querySelector('.t3d__wallL');
+      var wallREl = tunnel.querySelector('.t3d__wallR');
+      var floorEl = tunnel.querySelector('.t3d__floor');
+      var vaultEls = [
+        [tunnel.querySelector('.t3d__vaultC'), 0],
+        [tunnel.querySelector('.t3d__vaultL1'), -34],
+        [tunnel.querySelector('.t3d__vaultR1'), 34]
+      ];
+      var trimQ = window.matchMedia('(max-width: 760px), (max-height: 560px)');
+
+      function sizeCorridor() {
+        var els = [wallLEl, wallREl, floorEl,
+                   vaultEls[0][0], vaultEls[1][0], vaultEls[2][0]];
+        if (!trimQ.matches) {
+          // desktop: the stylesheet geometry, untouched
+          els.forEach(function (el) {
+            el.style.width = el.style.height = el.style.transform = '';
+          });
+          wallLEl.style.backgroundPositionX = '';
+          return;
+        }
+        var W = window.innerWidth;          // same source dolly() reads
+        var H = pinEl.clientHeight;         // 100svh, stable under URL bar
+        var cam = Math.max(0.55, Math.min(1, W / 1150));
+
+        // walls (x=+-472) leave the frame sideways
+        var zWall = D * (1 - 944 * cam / (W + 2 * MX));
+        // the floor (y=+480) leaves the bottom edge (44% of H below origin)
+        var zFloor = D * (1 - 480 * cam / (0.44 * H + MY));
+        // the vault ring: every arc point must be past the top OR a side edge
+        var zVault = -Infinity;
+        for (var a = 0; a <= 52; a += 4) {
+          var r = a * Math.PI / 180;
+          var px = 473 * Math.sin(r), py = 106 + 473 * Math.cos(r);
+          zVault = Math.max(zVault, Math.min(
+            D * (1 - py * cam / (0.56 * H + MY)),
+            D * (1 - px * cam / (W / 2 + MX))));
+        }
+
+        var wallW = Math.max(120, zWall - WALL_FAR);
+        var tx = (zWall + WALL_FAR) / 2;
+        wallREl.style.width = wallLEl.style.width = wallW + 'px';
+        wallREl.style.transform =
+          'translate(-50%,-50%) rotateY(-90deg) translateZ(-472px) translateX(' + tx.toFixed(1) + 'px)';
+        wallLEl.style.transform =
+          'translate(-50%,-50%) rotateY(90deg) translateZ(-472px) translateX(' + (-tx).toFixed(1) + 'px)';
+        // wallL is mirrored, so its element-left is the trimmed near edge:
+        // re-base its streamed layers so pools and coursing keep the exact
+        // world phase the desktop draws (pools half a bay off wallR's), and
+        // right-align its pinned dead fade
+        var C = ((wallW - 944) % 592 + 592) % 592;
+        var Cb = ((wallW - 760) % 344 + 344) % 344;
+        wallLEl.style.backgroundPositionX =
+          (wallW - 4200) + 'px, 0, calc(' + C.toFixed(1) + 'px - var(--walk)), calc(' +
+          Cb.toFixed(1) + 'px - var(--walk)), 0';
+
+        var fH = Math.max(120, zFloor - FLOOR_FAR);
+        floorEl.style.height = fH + 'px';
+        floorEl.style.transform =
+          'translate(-50%,-50%) rotateX(90deg) translateZ(-480px) translateY(' + (FLOOR_FAR + fH / 2).toFixed(1) + 'px)';
+
+        var vH = Math.max(120, zVault - VAULT_FAR);
+        var vTy = (VAULT_FAR + vH / 2).toFixed(1);
+        vaultEls.forEach(function (v) {
+          v[0].style.height = vH + 'px';
+          v[0].style.transform =
+            'translate(-50%,-50%) translateY(-106px) rotateZ(' + v[1] +
+            'deg) rotateX(90deg) translateZ(473px) translateY(' + vTy + 'px)';
+        });
+      }
+      sizeCorridor();
+      ScrollTrigger.addEventListener('refreshInit', sizeCorridor);
+
+      // while pinch-zoomed the compositor re-rasters every surface at the
+      // zoom's square; hide the stone until the visitor zooms back out
+      var vv = window.visualViewport;
+      function onPinch() {
+        section.classList.toggle('is-zoomed', vv.scale > 1.3);
+      }
+      if (vv) vv.addEventListener('resize', onPinch);
 
       function dolly(p) {
         var vaultIn = Math.max(0, Math.min(1, (p - 0.78) / 0.14));
@@ -698,7 +796,17 @@
         onUpdate: function (self) { dolly(self.progress); }
       });
 
-      return function () { dolly(0); };
+      return function () {
+        dolly(0);
+        ScrollTrigger.removeEventListener('refreshInit', sizeCorridor);
+        if (vv) vv.removeEventListener('resize', onPinch);
+        section.classList.remove('is-zoomed');
+        [wallLEl, wallREl, floorEl,
+         vaultEls[0][0], vaultEls[1][0], vaultEls[2][0]].forEach(function (el) {
+          el.style.width = el.style.height = el.style.transform = '';
+        });
+        wallLEl.style.backgroundPositionX = '';
+      };
     });
   }
 
