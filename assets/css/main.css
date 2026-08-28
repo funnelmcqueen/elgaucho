@@ -572,51 +572,62 @@ html.has-wordmark .hero__titleText {
 }
 
 /* the house, in brief: a ruled masthead column */
-/* the two who stand at the fire, matted like every other photograph here.
-   Names read first; the role sits under them in the small caps the facts use. */
-.people {
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(14px, 1.8vw, 24px);
-  max-width: 460px; margin: clamp(30px, 4vw, 44px) 0 0;
+/* ============================================================
+   LOS NUESTROS — the people, as a band across the whole measure.
+   They began stacked in the text column, which was already carrying the
+   label, the heading and three blocks of prose while the facts and the
+   photographs beside it ran half as tall. Given their own row they fit:
+   two portraits at 5:7 stand exactly as tall as the two guest quotes and
+   the seal stacked next to them.
+   ============================================================ */
+.crew {
+  max-width: 1240px; margin: clamp(44px, 5vw, 76px) auto 0;
+  padding: clamp(26px, 3vw, 40px) clamp(20px, 4vw, 48px) 0;
+  border-top: 1px solid var(--line-light);
 }
-.people__one { margin: 0; }
-.people__one .plate__img { aspect-ratio: 5 / 7; }
-/* scoped past .on-cream .plate figcaption, which sets every other caption on
-   this ground in small right-aligned caps -- a person's name is not a caption */
-.on-cream .people__one figcaption {
+.crew__label {
+  font-family: var(--sans); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--bronze-text-light); margin-bottom: clamp(18px, 2.4vw, 28px);
+}
+.crew__grid {
+  display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 0.85fr) minmax(0, 1.6fr);
+  gap: clamp(16px, 2.2vw, 32px); align-items: start;
+}
+.crew__one { margin: 0; }
+.crew__one .plate__img { aspect-ratio: 5 / 7; }
+/* a person's name is not a caption: past the rule that sets every other
+   caption on this ground in small right-aligned caps */
+.on-cream .crew__one figcaption {
   margin-top: 12px; text-align: left;
   font-family: var(--serif); font-size: 17px; line-height: 1.25;
   letter-spacing: 0; text-transform: none; color: var(--tinto);
 }
-.on-cream .people__one figcaption b { font-weight: 400; display: block; }
-.on-cream .people__one figcaption span {
+.on-cream .crew__one figcaption b { font-weight: 400; display: block; }
+.on-cream .crew__one figcaption span {
   display: block; margin-top: 5px;
   font-family: var(--sans); font-size: 10px; font-weight: 500;
   letter-spacing: 0.2em; text-transform: uppercase; color: var(--bronze-text-light);
 }
-@media (max-width: 520px) {
-  .people { max-width: none; }
-}
-
-/* what guests say about the people, set beneath the people themselves */
-.people__words {
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(18px, 2.4vw, 32px);
-  margin: clamp(26px, 3.4vw, 38px) 0 0;
-  padding-top: clamp(20px, 2.6vw, 28px); border-top: 1px solid var(--line-light);
-}
-.people__words blockquote { margin: 0; }
-.people__words p {
-  font-family: var(--serif); font-style: italic; font-size: 16px;
+.crew__words { display: flex; flex-direction: column; gap: clamp(18px, 2.2vw, 26px); height: 100%; }
+.crew__words blockquote { margin: 0; }
+.crew__words p {
+  font-family: var(--serif); font-style: italic; font-size: clamp(17px, 1.5vw, 20px);
   line-height: 1.45; color: var(--tinto);
 }
-.people__words cite {
+.crew__words cite {
   display: block; margin-top: 9px; font-style: normal;
   font-family: var(--sans); font-size: 10px; font-weight: 500;
   letter-spacing: 0.2em; text-transform: uppercase; color: var(--bronze-text-light);
 }
-@media (max-width: 560px) {
-  .people__words { grid-template-columns: 1fr; gap: 20px; }
+/* the seal follows the words rather than being pushed to the floor */
+.crew__words .gaucho-seal { margin-top: 6px; align-self: flex-start; }
+@media (max-width: 860px) {
+  .crew__grid { grid-template-columns: 1fr 1fr; }
+  .crew__words { grid-column: 1 / -1; margin-top: 8px; }
+}
+@media (max-width: 480px) {
+  .crew__grid { gap: 14px; }
 }
 
 .facts { position: relative; padding-top: 6px; }
