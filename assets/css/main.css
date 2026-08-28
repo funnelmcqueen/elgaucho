@@ -255,7 +255,13 @@ html:not(.js) .loader, .is-static-page .loader { display: none; }
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
   border-bottom-color: var(--line-dark);
 }
-.nav__links { display: flex; align-items: center; gap: 21px; }
+.nav__links { display: flex; align-items: center; gap: 18px; }
+/* seven links is what the house has to say; below this the bar would crowd
+   the phone number, so it tightens before the burger takes over at 930 */
+@media (max-width: 1180px) {
+  .nav__links { gap: 13px; }
+  .nav__link { font-size: 12px; letter-spacing: 0.05em; }
+}
 /* the bar carries two kinds of destination: four chapters of this page, and
    two printed lists that are pages of their own. The hairline is what tells
    the visitor that clicking right of it leaves the page. */
@@ -1414,6 +1420,31 @@ html:not(.js) .filmstrip__row figure, .filmstrip.is-static .filmstrip__row figur
 }
 .footer__links a:hover, .footer__social a:hover { color: var(--brasa); }
 .footer__links--list { color: var(--bronze-text) !important; }
+/* the bar's own room, four frames wide: the thatch, the serve, the seats and
+   the glass after dark. Matted like every other photograph on the site. */
+.sierra__strip {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: clamp(10px, 1.4vw, 18px);
+  max-width: 1240px; margin: clamp(34px, 5vw, 56px) auto 0;
+  padding: 0 clamp(20px, 4vw, 48px);
+}
+.sierra__strip .plate { padding: clamp(7px, 0.7vw, 11px); border: 1px solid var(--line-dark); }
+.sierra__strip .plate__img { aspect-ratio: 1; }
+.sierra__cta { margin-top: 26px; }
+@media (max-width: 760px) {
+  .sierra__strip { grid-template-columns: repeat(2, 1fr); }
+}
+/* the same frames on the bar's own page, given more room */
+.sierra-gallery {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(10px, 1.4vw, 18px); margin: clamp(30px, 4vw, 48px) 0 0;
+}
+.sierra-gallery .plate { padding: clamp(7px, 0.7vw, 11px); border: 1px solid var(--line-light); }
+.sierra-gallery .plate__img { aspect-ratio: 1; }
+@media (max-width: 620px) {
+  .sierra-gallery { grid-template-columns: repeat(2, 1fr); }
+}
+
 /* the two lists get a real button where the page has just talked about them */
 .cocina__tasting-cta { grid-column: 1 / -1; margin-top: 22px; }
 .vault__cta { margin-top: 22px; }

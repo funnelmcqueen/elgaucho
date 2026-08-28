@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Sierra &middot; Tapas y Cocteler&iacute;a</title>
+  <meta name="description" content="The bar list at La Sierra, El Gaucho Tirana: Latin American cocktails country by country, house pours, tapas from the kitchen, beer and wine by the glass.">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="La Sierra &middot; Tapas y Cocteler&iacute;a">
+  <meta property="og:description" content="The bar list at La Sierra, El Gaucho Tirana: Latin American cocktails country by country, house pours, tapas from the kitchen, beer and wine by the glass.">
+  <meta property="og:image" content="https://elgaucho-liart.vercel.app/assets/img/steak-fork.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Ibarra+Real+Nova:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css?v=73">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+  <!-- the same shell the home page runs: cursor, bar, menu, footer -->
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+    <a class="nav__brand" href="index.html" aria-label="El Gaucho Tirana, back to the top">
+      <span class="nav__brandRider" id="navRider" aria-hidden="true"></span>
+    </a>
+    <!-- two kinds of destination, and the bar should say so: the chapters of
+         the house on the left, the two printed lists on the right -->
+    <nav class="nav__links" aria-label="Primary">
+      <a href="index.html#cortes" class="nav__link">Los Cortes</a>
+      <a href="index.html#cocina" class="nav__link">La Cocina</a>
+      <a href="index.html#cantina" class="nav__link">La Cantina</a>
+      <a href="index.html#sierra" class="nav__link">La Sierra</a>
+      <span class="nav__rule" aria-hidden="true"></span>
+      <a href="carta.html" class="nav__link nav__link--list">La Carta</a>
+      <a href="vinos.html" class="nav__link nav__link--list">Los Vinos</a>
+      <a href="sierra.html" class="nav__link nav__link--list is-current" aria-current="page">Los Cócteles</a>
+    </nav>
+    <div class="nav__right">
+      <a href="tel:+355696098888" class="nav__phone">+355 69 609 8888</a>
+      <a href="https://book.altaste.com/place/el-gaucho" target="_blank" rel="noopener" class="btn btn--brasa nav__book">Book a table</a>
+      <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+    <span class="nav__thread" id="navThread" aria-hidden="true"></span>
+  </header>
+
+<div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <nav class="menu-overlay__links" aria-label="Menu">
+      <p class="menu-overlay__group">La casa</p>
+      <a href="index.html#cortes" class="menu-overlay__link"><em>Los Cortes</em><span>The grill</span></a>
+      <a href="index.html#cocina" class="menu-overlay__link"><em>La Cocina</em><span>The kitchen</span></a>
+      <a href="index.html#cantina" class="menu-overlay__link"><em>La Cantina</em><span>The tunnel cellar</span></a>
+      <a href="index.html#sierra" class="menu-overlay__link"><em>La Sierra</em><span>Cocteleria</span></a>
+      <a href="index.html#visit" class="menu-overlay__link"><em>Visítanos</em><span>Find us</span></a>
+      <p class="menu-overlay__group">Las cartas</p>
+      <a href="carta.html" class="menu-overlay__link"><em>La Carta</em><span>65 dishes</span></a>
+      <a href="vinos.html" class="menu-overlay__link"><em>Los Vinos</em><span>246 labels</span></a>
+      <a href="sierra.html" class="menu-overlay__link is-current" aria-current="page"><em>Los Cócteles</em><span>70 pours &amp; plates</span></a>
+    </nav>
+    <a href="https://book.altaste.com/place/el-gaucho" target="_blank" rel="noopener" class="btn btn--brasa">Book a table</a>
+  </div>
+
+  <main id="main">
+    <header class="carta-head">
+      <span class="carta-head__mark" id="cartaWordmark" aria-hidden="true"></span>
+      <p class="carta-head__eyebrow">Tapas y cocteler&iacute;a &middot; by El Gaucho</p>
+      <h1 class="carta-head__title">La Sierra</h1>
+      <p class="carta-head__sub">70 pours and plates, from Argentina up to Cuba.</p>
+      <nav class="carta-jump" aria-label="Jump to"><a href="#b-tradita-de-america-latina">The classics of the continent</a><a href="#b-cocktail-et-de-la-sierra">The house pours</a><a href="#b-aperitivo">From El Gaucho's kitchen</a><a href="#b-cerveza">Beer</a><a href="#b-vino-por-copa">Wine by the glass</a><a href="#b-agua-t-oacute-nica">Tonic water</a><a href="#b-refrescos">Soft drinks</a></nav>
+    </header>
+
+    <div class="carta-body on-cream">
+<section class="carta-part" id="beber">
+<p class="label reveal-label"><i>V</i>La Sierra</p>
+<h2 class="carta-part__title reveal-up">Travel toward taste, emotions and sounds of Latin America.</h2>
+<p class="carta-part__note reveal-up">The bar pours the continent country by country, Argentina to Cuba, with tapas out of El Gaucho’s kitchen on the side. Prices in Albanian lek.</p>
+<div class="sierra-gallery reveal-up">
+<figure class="plate"><div class="plate__img"><img src="assets/img/sierra-bar.webp" alt="The bar under its thatch, bottles ranged behind" loading="lazy" width="640" height="640"></div></figure>
+<figure class="plate"><div class="plate__img"><img src="assets/img/sierra-serve.webp" alt="A long red serve and empanadas on the paddle" loading="lazy" width="640" height="640"></div></figure>
+<figure class="plate"><div class="plate__img"><img src="assets/img/sierra-lounge.webp" alt="Low seats and greenery under the parasols" loading="lazy" width="640" height="640"></div></figure>
+<figure class="plate"><div class="plate__img"><img src="assets/img/sierra-copa.webp" alt="A cocktail held against the leaves" loading="lazy" width="640" height="640"></div></figure>
+<figure class="plate"><div class="plate__img"><img src="assets/img/sierra-table.webp" alt="Drinks and small bites on a low table" loading="lazy" width="640" height="640"></div></figure>
+<figure class="plate"><div class="plate__img"><img src="assets/img/sierra-night.webp" alt="A dark red serve, glass stemmed, after dark" loading="lazy" width="640" height="640"></div></figure>
+</div>
+<div class="carta-block reveal-up" id="b-tradita-de-america-latina">
+<h3 class="cocina__cat">Tradita de America Latina <span>The classics of the continent</span></h3>
+</ul>
+<h4 class="carta-country">Argentina</h4>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">Fernet Cola <i>Fernet Branca, Cola, Lime</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">550 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Argentina Cocktail <i>Gin, Dry Vermouth, Cointreau, Benedectine, Orange bitter, Angostura</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">700 L</span></li>
+</ul>
+<h4 class="carta-country">Mexico</h4>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">Paloma <i>Tequila, Grapefruit Juice, Sugar Syrup, Lime</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">600 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Margarita <i>Tequila, Triple Sec, Lime</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">600 L</span></li>
+</ul>
+<h4 class="carta-country">Brazil</h4>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">Caipirinha <i>Cachaca, Sugarcane, Lime</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">600 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Caipiroska <i>Vodka, Sugar Syrup, Lime</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">600 L</span></li>
+</ul>
+<h4 class="carta-country">Cuba</h4>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">Mojito <i>Rum, Mint Leaves, Sugar, Lime, Soda</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">600 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Daiquiri <i>Rum, Lime, Demerara Syrup</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">600 L</span></li>
+</ul>
+<h4 class="carta-country">Puerto Rico</h4>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">Pina Colada <i>White Rum, Dark Rum, Pineapple Juice, Coconut Cream</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">650 L</span></li>
+</ul>
+</div>
+<div class="carta-block reveal-up" id="b-cocktail-et-de-la-sierra">
+<h3 class="cocina__cat">Cocktail-et de La Sierra <span>The house pours</span></h3>
+</ul>
+<h4 class="carta-country">Peru</h4>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">Pisco Sour <i>Pisco, Lime, Sugar Syrup, Egg White, Angostura</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">600 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Chilcano <i>Pisco, Lime, Angostura, Ginger Beer</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">650 L</span></li>
+</ul>
+<h4 class="carta-country">Colombia</h4>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">Coco Loco <i>Rum, Vodka, Tequila, Coconut Cream, Coconut Water, Lime</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">700 L</span></li>
+</ul>
+<h4 class="carta-country">Chile</h4>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">Serena Libre <i>Pisco, Papaya Juice, Powdered Sugar</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">600 L</span></li>
+</ul>
+<h4 class="carta-country">Venezuela</h4>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">Guarapita <i>Rum, Passion Fruit Juice, Orange Juice, Grenadine, Lime, Mint Leaves</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">650 L</span></li>
+</ul>
+<h4 class="carta-country">De la casa</h4>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">Evita <i>Bourbon, Calvados, Cinnamon, Lemon Juice, Sugar Syrup, Egg White, Nutmeg</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">650 L</span></li>
+<li class="menu-item"><span class="menu-item__name">San Martin <i>Cachaca, Maraschino, Lime, Passion Fruit, Mint</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">650 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Che Guevara <i>Hibiscus Tequila, Grand Marnier, Lime</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">600 L</span></li>
+<li class="menu-item"><span class="menu-item__name">La Mendozina <i>Malamado Fortified Wine, Aperol, Cherry, Lemon Juice, Sugar Syrup</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">700 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Sol Rojo <i>Gin, Campari, Pomegranade Syrup, Cucumber Syrup, Lime</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">600 L</span></li>
+</ul>
+</div>
+<div class="carta-block reveal-up" id="b-aperitivo">
+<h3 class="cocina__cat">Aperitivo <span>From El Gaucho's kitchen</span></h3>
+</ul>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">Empanada me mish pule (1 cope)</span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">200 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Empanada me mish Black Angus (1 cope)</span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">250 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Chips patatesh</span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">300 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Tacos (1 cope)</span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">300 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Patate baby te skuqura</span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">400 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Chips Black Angus</span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">700 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Jamon de Bellota (30g)</span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">800 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Tartare Black Angus ne kaush (2 cope)</span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">800 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Tostadas (4 cope)</span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">800 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Kroketa me Jamon (4 cope)</span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">800 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Spritz Aperol <i>Aperol, Prosecco, Soda Water</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">500 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Campari Spritz <i>Campari, Prosecco, Soda Water</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">500 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Hugo <i>Edelflower Syrup, Prosecco, Soda Water, Mint Leaves</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">450 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Mimoza <i>Prosecco, Fresh Orange Juice</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">600 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Sangria <i>Red wine, Brandy, Orange, Lemon, Green Apple, Cloves, Cinnamon</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">500 L</span></li>
+</ul>
+</div>
+<div class="carta-block reveal-up" id="b-cerveza">
+<h3 class="cocina__cat">Cerveza <span>Beer</span></h3>
+</ul>
+<h4 class="carta-country">On draught</h4>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">Carlsberg me kriko <i>Pils 5,1 Alk. &middot; 0.25 L</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">220 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Carlsberg me kriko <i>Pils 5,1 Alk. &middot; 0.5 L</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">400 L</span></li>
+</ul>
+<h4 class="carta-country">Bottled 0.33 L</h4>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">Budweiser <i>Lager Beer 5% Alk.</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">300 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Quilmes <i>Lager Beer 4,9 Alk.</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">400 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Blanche de Namur <i>White Ale 4,5% Alk.</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">550 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Vedett <i>Ipa 5,5% Alk.</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">600 L</span></li>
+<li class="menu-item"><span class="menu-item__name">La Chouffe <i>Strong Ale 8% Alk.</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">600 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Duvel <i>Strong Blond 8,5% Alk.</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">600 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Mc Chouffe <i>Strong Dark 8% Alk</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">600 L</span></li>
+</ul>
+<h4 class="carta-country">Bottled 0.75 L</h4>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">La Chouffe <i>Strong Ale 8% Alk.</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">1.400 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Saison Dupont <i>Saison 5,5% Alk.</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">1.600 L</span></li>
+</ul>
+</div>
+<div class="carta-block reveal-up" id="b-vino-por-copa">
+<h3 class="cocina__cat">Vino por copa <span>Wine by the glass</span></h3>
+</ul>
+<h4 class="carta-country">Sparkling</h4>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">Prosecco “Argeo” Brut – Ruggeri <i>100% Glera 11% Alk.</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">520 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Fin del Mundo Extra Brut – Fin del Mundo <i>80% Pinot Noir – 20% Chardonnay 12,5% Alk.</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">900 L</span></li>
+</ul>
+<h4 class="carta-country">White</h4>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">Pinot Grigio 2019 – Trapiche <i>100% Pinot Grigio 13% Alk.</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">400 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Chardonnay 2020 – Italo Cescon <i>100% Chardonnay 12,5% Alk.</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">440 L</span></li>
+</ul>
+<h4 class="carta-country">Ros&eacute;</h4>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">Serina 2021 – Kantina Nurellari <i>100% Serine e zeze 13% Alk.</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">500 L</span></li>
+</ul>
+<h4 class="carta-country">Red</h4>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">Cabernet Sauvignon 2019 – Trapiche <i>100% Cabernet Sauvignon 13,5% Alk.</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">400 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Malbec “Impure” 2019 – Trapiche <i>100% Malbec 14% Alk.</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">500 L</span></li>
+</ul>
+<h4 class="carta-country">Sweet</h4>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">Moscato Dolce 2015 – Leone De Castris <i>100% Moscato 13,5% Alk.</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">800 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Tawny Porto – Ramos Pinto <i>Tinta Roriz – Tinto Cão 19,5% Alk.</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">600 L</span></li>
+</ul>
+</div>
+<div class="carta-block reveal-up" id="b-agua-t-oacute-nica">
+<h3 class="cocina__cat">Agua t&oacute;nica <span>Tonic water</span></h3>
+</ul>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">Qafshtama <i>0.5 L</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">120 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Qafshtama <i>0.75 L</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">250 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Britvic Indian Tonic Water <i>0.15 L</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">150 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Fentimans Indian Tonic Water <i>0.125 L</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">250 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Sanpellegrino Tonic Water <i>0.2 L</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">250 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Franklin-Sons Indian Tonic Water <i>0.2 L</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">350 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Franklin-Sons Elderflower/Cucumber Tonic</span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">350 L</span></li>
+</ul>
+</div>
+<div class="carta-block reveal-up" id="b-refrescos">
+<h3 class="cocina__cat">Refrescos <span>Soft drinks</span></h3>
+</ul>
+<ul class="menu-list">
+<li class="menu-item"><span class="menu-item__name">Coca Cola <i>0.33 L</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">200 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Coca Cola Zero <i>0.33 L</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">200 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Sprite <i>0.33 L</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">200 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Fanta Orange <i>0.33 L</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">200 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Fanta Exotic <i>0.33 L</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">200 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Sanpellegrino aranciata <i>0.2 L</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">250 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Sanpellegrino arancia rossa <i>0.2 L</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">250 L</span></li>
+<li class="menu-item"><span class="menu-item__name">San Pellegrino limonata <i>0.2 L</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">250 L</span></li>
+<li class="menu-item"><span class="menu-item__name">Fentimans Rose Lemonade <i>0.25 L</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">400 L</span></li>
+</ul>
+</div>
+</section>
+
+      <div class="carta-seam" aria-hidden="true"><span class="carta-seal" id="cartaSeal"></span></div>
+      <p class="carta-onward">The kitchen and the cellar have lists of their own. <a href="carta.html">La carta &rarr;</a> &nbsp; <a href="vinos.html">Los vinos &rarr;</a></p>
+    </div>
+  </main>
+
+<footer class="footer soul">
+      <div class="footer__giant" aria-hidden="true">
+        <div class="marquee__track marquee__track--slow">
+          <span>EL GAUCHO&ensp;·&ensp;EL GAUCHO&ensp;·&ensp;</span>
+          <span>EL GAUCHO&ensp;·&ensp;EL GAUCHO&ensp;·&ensp;</span>
+        </div>
+      </div>
+      <div class="footer__inner">
+        <div class="footer__gaucho" id="footerGaucho" role="button" tabindex="0" aria-label="Ride back to the top"><img class="footer__logo" src="assets/img/logo.webp" alt="El Gaucho · Argentinian Steak House" width="220"></div>
+        <nav class="footer__links" aria-label="Footer">
+          <a href="index.html#cortes">Los Cortes</a>
+          <a href="index.html#cocina">La Cocina</a>
+          <a href="index.html#cantina">La Cantina</a>
+          <a href="index.html#sierra">La Sierra</a>
+          <a href="index.html#visit">Visit</a>
+          <a href="carta.html" class="footer__links--list">La Carta</a>
+          <a href="vinos.html" class="footer__links--list">Los Vinos</a>
+          <a href="sierra.html" class="footer__links--list is-current" aria-current="page">Los Cócteles</a>
+        </nav>
+        <div class="footer__social">
+          <a href="https://www.instagram.com/el_gaucho_tirana/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/profile.php?id=100063536110215" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://www.tripadvisor.com/Restaurant_Review-g294446-d23295845-Reviews-El_Gaucho_Tirana-Tirana_Tirana_County.html" target="_blank" rel="noopener">TripAdvisor</a>
+        </div>
+        <p class="footer__fine">© 2026 El Gaucho Tirana &middot; The first Argentinian restaurant in Tirana &middot; <em>buen provecho</em></p>
+      </div>
+    </footer>
+
+  <script src="assets/js/gaucho-data.js?v=4"></script>
+  <script src="assets/js/gaucho-logo.js?v=6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" onerror="document.documentElement.classList.remove('js')"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollToPlugin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+  <script src="assets/js/main.js?v=92"></script>
+</body>
+</html>
