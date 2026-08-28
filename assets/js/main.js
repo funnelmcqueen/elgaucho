@@ -221,6 +221,25 @@
     return letters;
   }
 
+  /* The reviews guests have written, shown whole rather than one at a time
+     behind a carousel. Adding one is adding an entry here; the live Google
+     reviews replace the set through the same renderer. */
+  var REVIEWS = [
+    {
+      text: 'One of the restaurants I enjoy most being in Tirana. Starting from the sight it gives in its whole architecture to when inside enjoying the view and the very welcoming staff. They will immediately feel you like at home. The food is really tasty, made with passion and special care. I recommend visiting the place, if you are a meat and wine lover and enjoy the great ambiance.',
+      author: 'Olta Canka'
+    },
+    {
+      text: 'Siamo stati lì per l’ultima sera a Tirana. Non potevamo scegliere posto migliore dove poter cenare. Locale bellissimo, accogliente e personale serio che sa cosa porta al tavolo. Carne ottima sia cottura che sapore. Insomma niente da criticare.',
+      author: 'Rosario Ciulla',
+      gloss: 'Our last evening in Tirana, and we could not have chosen better. A beautiful room, welcoming, and serious staff who know what they are carrying to the table.'
+    },
+    {
+      text: 'Everything was delicious. Also very nice and comfortable place with excellent service staff, friendly and helpful! Highly recommended.',
+      author: 'Roceta'
+    }
+  ];
+
   /* announce new-tab links to assistive tech (both modes) */
   document.querySelectorAll('a[target="_blank"]').forEach(function (a) {
     var s = document.createElement('span');
@@ -253,7 +272,7 @@
     initRideHome(true);
     initLasso(true);
     initCortes();
-    initQuotes(true);
+    initReviews(true);
     initPlaces();
     initNavBasics(true);
     var at = new URLSearchParams(window.location.search).get('at');
@@ -1555,42 +1574,6 @@
     return s;
   }
 
-  function renderReviews(list, rating, total) {
-    var stage = document.getElementById('quotesStage');
-    var dots = document.getElementById('quotesDots');
-    if (!stage || !list || !list.length) return false;
-    stage.innerHTML = '';
-    dots.innerHTML = '';
-    list.slice(0, 5).forEach(function (r, i) {
-      var q = document.createElement('blockquote');
-      q.className = 'quote' + (i === 0 ? ' is-active' : '');
-      var p = document.createElement('p');
-      p.textContent = '“' + String(r.text || '').trim() + '”';
-      var c = document.createElement('cite');
-      c.textContent = r.author || '';
-      if (r.rating) {
-        var st = document.createElement('span');
-        st.className = 'quote__stars';
-        st.setAttribute('aria-label', r.rating + ' out of 5');
-        st.textContent = starRow(r.rating);
-        c.appendChild(st);
-      }
-      q.appendChild(p); q.appendChild(c);
-      stage.appendChild(q);
-      var b = document.createElement('button');
-      b.setAttribute('aria-label', 'Review ' + (i + 1));
-      if (i === 0) b.setAttribute('aria-current', 'true');
-      b.appendChild(document.createElement('i'));
-      dots.appendChild(b);
-    });
-    var src = document.getElementById('quotesSource');
-    if (src && rating) {
-      src.innerHTML = 'Live from Google &middot; <b>' + rating.toFixed(1) +
-        '</b> out of 5, from ' + total + ' reviews';
-    }
-    return true;
-  }
-
   function initPlaces() {
     if (!PLACES || !PLACES.key || !PLACES.placeId) return;
     var url = 'https://places.googleapis.com/v1/places/' + encodeURIComponent(PLACES.placeId) +
@@ -1601,66 +1584,66 @@
         return {
           text: (r.originalText && r.originalText.text) || (r.text && r.text.text) || '',
           author: (r.authorAttribution && r.authorAttribution.displayName) || '',
-          rating: r.rating
+          rating: r.rating, source: 'Google'
         };
       }).filter(function (r) { return r.text && r.text.length > 40; });
-      if (renderReviews(list, d.rating, d.userRatingCount)) initQuotes(staticMode);
+      if (list.length) { REVIEWS = list; initReviews(staticMode); }
+      var src = document.getElementById('quotesSource');
+      if (src && d.rating) src.innerHTML = 'Live from Google &middot; <b>' + d.rating.toFixed(1) + '</b> out of 5, from ' + d.userRatingCount + ' reviews';
     }).catch(function () { /* the written quotes stand */ });
   }
 
-  function initQuotes(isStatic) {
-    var quotes = gsap.utils.toArray('.quote');
-    var dots = gsap.utils.toArray('#quotesDots button');
-    var stage = document.getElementById('quotesStage');
-    if (!quotes.length) return;
-    var idx = 0, timer = null, paused = false, manual = false;
-
-    function show(n) {
-      quotes.forEach(function (q, i) {
-        var active = i === n;
-        if (!isStatic) {
-          gsap.killTweensOf(q);
-          if (active) {
-            q.classList.add('is-active');
-            gsap.fromTo(q, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power2.out' });
-          } else {
-            gsap.set(q, { clearProps: 'opacity,visibility,transform' });
-            q.classList.remove('is-active');
-          }
-        } else {
-          q.classList.toggle('is-active', active);
-        }
-      });
-      dots.forEach(function (d, i) {
-        if (i === n) d.setAttribute('aria-current', 'true');
-        else d.removeAttribute('aria-current');
-      });
-      idx = n;
-    }
-    dots.forEach(function (d, i) {
-      d.addEventListener('click', function () {
-        manual = true;
-        if (timer) { clearInterval(timer); timer = null; }
-        show(i);
-      });
-    });
-    if (!isStatic) {
-      timer = setInterval(function () {
-        if (!paused && !manual) show((idx + 1) % quotes.length);
-      }, 6000);
-      if (stage) {
-        stage.addEventListener('mouseenter', function () { paused = true; });
-        stage.addEventListener('mouseleave', function () { paused = false; });
-        stage.addEventListener('focusin', function () { paused = true; });
-        stage.addEventListener('focusout', function () { paused = false; });
+  function initReviews(isStatic) {
+    var wall = document.getElementById('reviewWall');
+    if (!wall) return;
+    wall.innerHTML = '';
+    REVIEWS.forEach(function (r) {
+      var card = document.createElement('blockquote');
+      card.className = 'review reveal-card';
+      if (r.rating) {
+        var st = document.createElement('p');
+        st.className = 'review__stars';
+        st.setAttribute('aria-label', r.rating + ' out of 5');
+        st.textContent = starRow(r.rating);
+        card.appendChild(st);
       }
-      ScrollTrigger.create({
-        trigger: '.quotes', start: 'top bottom', end: 'bottom top',
-        onToggle: function (self) { if (self.isActive) paused = false; else paused = true; }
+      var p = document.createElement('p');
+      p.className = 'review__text';
+      p.textContent = '“' + String(r.text).trim() + '”';
+      card.appendChild(p);
+      if (r.gloss) {
+        var g = document.createElement('p');
+        g.className = 'review__gloss';
+        g.textContent = r.gloss;
+        card.appendChild(g);
+      }
+      var c = document.createElement('cite');
+      c.className = 'review__by';
+      c.textContent = r.author;
+      if (r.source) {
+        var s = document.createElement('span');
+        s.textContent = r.source;
+        c.appendChild(s);
+      }
+      card.appendChild(c);
+      wall.appendChild(card);
+    });
+    // the reveal batch is wired once at boot; cards built after it need their
+    // own start state or they sit invisible
+    if (!isStatic && window.gsap) {
+      gsap.set(wall.children, { autoAlpha: 0, y: 30 });
+      ScrollTrigger.batch(wall.children, {
+        start: 'top 90%',
+        onEnter: function (els) {
+          gsap.to(els, { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.1, ease: 'power3.out', overwrite: true });
+        },
+        onEnterBack: function (els) {
+          gsap.to(els, { autoAlpha: 1, y: 0, duration: 0.6, overwrite: true });
+        }
       });
     }
   }
-  initQuotes(false);
+  initReviews(false);
   initPlaces();
 
   window.addEventListener('load', function () { ScrollTrigger.refresh(); });

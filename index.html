@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Ibarra+Real+Nova:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/main.css?v=79">
+  <link rel="stylesheet" href="assets/css/main.css?v=81">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -418,32 +418,25 @@
     <!-- ============ TESTIMONIALS ============ -->
     <section class="quotes on-cream" id="quotes">
       <div class="container container--narrow">
-        <p class="label reveal-label"><i>VII</i>Palabra de los invitados</p>
-        <div class="quotes__stage" id="quotesStage">
-          <blockquote class="quote is-active">
-            <p>“The food is really tasty, made with passion and special care&hellip; Definitely a must visit if you are in Town.”</p>
-            <cite>Olta Canka</cite>
-          </blockquote>
-          <blockquote class="quote">
-            <p>“Non potevamo scegliere posto migliore dove poter cenare. Il posto vale 5 stelle, se non di più&hellip; Carne ottima sia cottura che sapore.”</p>
-            <cite>Rosario Ciulla <span class="quote__gloss">“We could not have chosen a better place to dine. Five stars, if not more.”</span></cite>
-          </blockquote>
-          <blockquote class="quote">
-            <p>“Everything was delicious&hellip; Also very nice and comfortable place&hellip; Highly recommended.”</p>
-            <cite>Roceta</cite>
-          </blockquote>
+        <div class="quotes__head">
+          <div>
+            <p class="label reveal-label"><i>VII</i>Palabra de los invitados</p>
+            <h2 class="quotes__title reveal-up">What guests say when they get home</h2>
+          </div>
+          <div class="quotes__aside reveal-up">
+            <p class="quotes__source" id="quotesSource">Written by guests, in their own words</p>
+            <p class="quotes__out">
+              <a href="https://www.tripadvisor.com/Restaurant_Review-g294446-d23295845-Reviews-El_Gaucho_Tirana-Tirana_Tirana_County.html" target="_blank" rel="noopener">Read on TripAdvisor</a>
+              <a href="https://goo.gl/maps/eUxF9t29FRUbKLYq7" target="_blank" rel="noopener">Read on Google</a>
+            </p>
+          </div>
         </div>
+
+        <!-- the wall fills itself: written reviews by default, the live ones
+             from Google when a key is configured -->
+        <div class="reviews" id="reviewWall"></div>
+
         <div class="quotes__hoof" id="quotesHoof" aria-hidden="true"></div>
-        <div class="quotes__dots" id="quotesDots" aria-label="Testimonials">
-          <button aria-label="Quote 1" aria-current="true"><i></i></button>
-          <button aria-label="Quote 2"><i></i></button>
-          <button aria-label="Quote 3"><i></i></button>
-        </div>
-        <p class="quotes__source" id="quotesSource">Read them where they were written</p>
-        <p class="quotes__out">
-          <a href="https://www.tripadvisor.com/Restaurant_Review-g294446-d23295845-Reviews-El_Gaucho_Tirana-Tirana_Tirana_County.html" target="_blank" rel="noopener">TripAdvisor</a>
-          <a href="https://goo.gl/maps/eUxF9t29FRUbKLYq7" target="_blank" rel="noopener">Google</a>
-        </p>
       </div>
     </section>
 
@@ -508,6 +501,6 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollToPlugin.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-  <script src="assets/js/main.js?v=95"></script>
+  <script src="assets/js/main.js?v=97"></script>
 </body>
 </html>

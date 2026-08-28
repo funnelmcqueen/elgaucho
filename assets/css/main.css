@@ -1355,7 +1355,7 @@ html:not(.js) .filmstrip__row figure, .filmstrip.is-static .filmstrip__row figur
   .quotes { padding: 64px 0 56px; }
   .quotes .label { margin-bottom: 24px; }
   .quotes__stage { min-height: 0; }
-  .quotes__hoof { margin-top: 18px; width: 30px; }
+  .quotes__hoof { margin-top: 18px; width: 30px; margin-left: auto; margin-right: auto; }
   .quotes__dots { margin-top: 20px; }
 }
 .quotes.on-cream .quote p { color: var(--tinto); }
@@ -1498,26 +1498,70 @@ html:not(.js) .filmstrip__row figure, .filmstrip.is-static .filmstrip__row figur
 .vault__cta { margin-top: 22px; }
 .vault__cta .btn, .cocina__tasting-cta .btn { display: inline-block; }
 .footer__fine { font-size: 13px; color: var(--cinder); }
-/* live reviews wear the house's own type: stars in ember, the source line
-   and the two ways out set quietly beneath the dots */
-.quote__stars {
-  display: inline-block; margin-left: 12px; letter-spacing: 0.12em;
-  color: var(--brasa); font-size: 12px;
+/* ============================================================
+   WHAT GUESTS SAY — a wall, not a slideshow. Every review is readable at
+   once and in full; a carousel showed one cropped line at a time and hid
+   the rest behind dots nobody presses.
+   ============================================================ */
+/* the section used to hold one centred quote at a time; a wall of them wants
+   the page's full measure and reads left, like everything else set in prose */
+.quotes { text-align: left; }
+.quotes .container--narrow { max-width: 1240px; }
+.quotes__head {
+  display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 48px); align-items: end;
+  margin-bottom: clamp(30px, 4vw, 48px);
 }
+.quotes__title {
+  font-family: var(--serif); font-weight: 400; color: var(--tinto);
+  font-size: clamp(28px, 3.4vw, 46px); line-height: 1.08;
+}
+.quotes__aside { text-align: right; }
 .quotes__source {
-  margin-top: 18px; text-align: center;
   font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em;
   text-transform: uppercase; color: var(--bronze-text-light);
 }
 .quotes__source b { font-weight: 600; color: var(--tinto); }
-.quotes__out { margin-top: 12px; text-align: center; display: flex; gap: 22px; justify-content: center; }
+.quotes__out { margin-top: 12px; display: flex; gap: 20px; justify-content: flex-end; flex-wrap: wrap; }
 .quotes__out a {
   font-family: var(--sans); font-size: 11px; font-weight: 500;
-  letter-spacing: 0.16em; text-transform: uppercase; color: var(--rescoldo);
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--rescoldo);
   border-bottom: 1px solid var(--line-light); padding-bottom: 3px;
   transition: color 0.3s ease, border-color 0.3s ease;
 }
 .quotes__out a:hover { color: var(--tinto); border-color: var(--bronze); }
+
+.reviews {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px); align-items: start;
+}
+.review {
+  margin: 0; padding: clamp(20px, 2vw, 28px);
+  border: 1px solid var(--line-light);
+  display: flex; flex-direction: column; height: 100%;
+}
+.review__stars { color: var(--brasa); letter-spacing: 0.14em; font-size: 13px; margin-bottom: 12px; }
+.review__text {
+  font-family: var(--serif); font-size: 16px; line-height: 1.55; color: var(--tinto);
+}
+.review__gloss {
+  margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line-light);
+  font-size: 13px; line-height: 1.5; color: var(--rescoldo); font-style: italic;
+}
+.review__by {
+  margin-top: auto; padding-top: 16px; font-style: normal;
+  font-family: var(--sans); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--bronze-text-light);
+}
+.review__by span {
+  display: block; margin-top: 5px; letter-spacing: 0.16em; color: var(--rescoldo);
+}
+@media (max-width: 900px) {
+  .quotes__head { grid-template-columns: 1fr; align-items: start; }
+  .quotes__aside { text-align: left; }
+  .quotes__out { justify-content: flex-start; }
+  .reviews { grid-template-columns: 1fr; }
+}
 
 /* ============================================================
    WHATSAPP — the standing offer, bottom right of every page.

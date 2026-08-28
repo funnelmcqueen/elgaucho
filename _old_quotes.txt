@@ -1,0 +1,52 @@
+  function initQuotes(isStatic) {
+    var quotes = gsap.utils.toArray('.quote');
+    var dots = gsap.utils.toArray('#quotesDots button');
+    var stage = document.getElementById('quotesStage');
+    if (!quotes.length) return;
+    var idx = 0, timer = null, paused = false, manual = false;
+
+    function show(n) {
+      quotes.forEach(function (q, i) {
+        var active = i === n;
+        if (!isStatic) {
+          gsap.killTweensOf(q);
+          if (active) {
+            q.classList.add('is-active');
+            gsap.fromTo(q, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power2.out' });
+          } else {
+            gsap.set(q, { clearProps: 'opacity,visibility,transform' });
+            q.classList.remove('is-active');
+          }
+        } else {
+          q.classList.toggle('is-active', active);
+        }
+      });
+      dots.forEach(function (d, i) {
+        if (i === n) d.setAttribute('aria-current', 'true');
+        else d.removeAttribute('aria-current');
+      });
+      idx = n;
+    }
+    dots.forEach(function (d, i) {
+      d.addEventListener('click', function () {
+        manual = true;
+        if (timer) { clearInterval(timer); timer = null; }
+        show(i);
+      });
+    });
+    if (!isStatic) {
+      timer = setInterval(function () {
+        if (!paused && !manual) show((idx + 1) % quotes.length);
+      }, 6000);
+      if (stage) {
+        stage.addEventListener('mouseenter', function () { paused = true; });
+        stage.addEventListener('mouseleave', function () { paused = false; });
+        stage.addEventListener('focusin', function () { paused = true; });
+        stage.addEventListener('focusout', function () { paused = false; });
+      }
+      ScrollTrigger.create({
+        trigger: '.quotes', start: 'top bottom', end: 'bottom top',
+        onToggle: function (self) { if (self.isActive) paused = false; else paused = true; }
+      });
+    }
+  }
