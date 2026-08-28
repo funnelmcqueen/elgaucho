@@ -254,6 +254,7 @@
     initLasso(true);
     initCortes();
     initQuotes(true);
+    initPlaces();
     initNavBasics(true);
     var at = new URLSearchParams(window.location.search).get('at');
     if (at) {
@@ -1535,6 +1536,78 @@
   /* ----------------------------------------------------------
      QUOTES — crossfade that cleans up after itself
      ---------------------------------------------------------- */
+  /* ----------------------------------------------------------
+     LIVE REVIEWS — Google Places, rendered in the house's own type.
+     A TripAdvisor widget is an iframe on their origin: it cannot be
+     restyled from here, only framed. Google returns the reviews as data,
+     so they can be set like everything else on the page. Give the config
+     below a key and a place id and the carousel fills itself from the
+     live reviews; leave it unset and the written ones stand.
+     The key must be restricted to this site's domain in Google Cloud --
+     it ships in the page, as every browser-side Places key does.
+     ---------------------------------------------------------- */
+  var PLACES = window.EG_PLACES || null;   // { key: '...', placeId: '...' }
+
+  function starRow(n) {
+    var full = Math.round(n);
+    var s = '';
+    for (var i = 1; i <= 5; i++) s += (i <= full ? '★' : '☆');
+    return s;
+  }
+
+  function renderReviews(list, rating, total) {
+    var stage = document.getElementById('quotesStage');
+    var dots = document.getElementById('quotesDots');
+    if (!stage || !list || !list.length) return false;
+    stage.innerHTML = '';
+    dots.innerHTML = '';
+    list.slice(0, 5).forEach(function (r, i) {
+      var q = document.createElement('blockquote');
+      q.className = 'quote' + (i === 0 ? ' is-active' : '');
+      var p = document.createElement('p');
+      p.textContent = '“' + String(r.text || '').trim() + '”';
+      var c = document.createElement('cite');
+      c.textContent = r.author || '';
+      if (r.rating) {
+        var st = document.createElement('span');
+        st.className = 'quote__stars';
+        st.setAttribute('aria-label', r.rating + ' out of 5');
+        st.textContent = starRow(r.rating);
+        c.appendChild(st);
+      }
+      q.appendChild(p); q.appendChild(c);
+      stage.appendChild(q);
+      var b = document.createElement('button');
+      b.setAttribute('aria-label', 'Review ' + (i + 1));
+      if (i === 0) b.setAttribute('aria-current', 'true');
+      b.appendChild(document.createElement('i'));
+      dots.appendChild(b);
+    });
+    var src = document.getElementById('quotesSource');
+    if (src && rating) {
+      src.innerHTML = 'Live from Google &middot; <b>' + rating.toFixed(1) +
+        '</b> out of 5, from ' + total + ' reviews';
+    }
+    return true;
+  }
+
+  function initPlaces() {
+    if (!PLACES || !PLACES.key || !PLACES.placeId) return;
+    var url = 'https://places.googleapis.com/v1/places/' + encodeURIComponent(PLACES.placeId) +
+      '?fields=rating,userRatingCount,reviews&key=' + encodeURIComponent(PLACES.key);
+    fetch(url).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      if (!d || !d.reviews) return;
+      var list = d.reviews.map(function (r) {
+        return {
+          text: (r.originalText && r.originalText.text) || (r.text && r.text.text) || '',
+          author: (r.authorAttribution && r.authorAttribution.displayName) || '',
+          rating: r.rating
+        };
+      }).filter(function (r) { return r.text && r.text.length > 40; });
+      if (renderReviews(list, d.rating, d.userRatingCount)) initQuotes(staticMode);
+    }).catch(function () { /* the written quotes stand */ });
+  }
+
   function initQuotes(isStatic) {
     var quotes = gsap.utils.toArray('.quote');
     var dots = gsap.utils.toArray('#quotesDots button');
@@ -1588,6 +1661,7 @@
     }
   }
   initQuotes(false);
+  initPlaces();
 
   window.addEventListener('load', function () { ScrollTrigger.refresh(); });
 
