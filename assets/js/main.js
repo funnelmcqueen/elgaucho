@@ -172,6 +172,47 @@
       letters.push(lg);
     });
     letters.under = under;
+
+    /* The viewBox handed to the renderer is generous: the drawn ink starts
+       well inside it, which pushed the whole lockup off the page's centre
+       line on a phone. Refit the box to the ink that is actually there, then
+       measure how far the name's own centre still sits from the box centre
+       (the fork on the rule overhangs to one side) and publish that as a
+       fraction of the box width. The phone layout applies it as a nudge, so
+       the name and the line under it both land on the axis at any size,
+       while the desktop column keeps the mark flush with its left edge. */
+    var svg = host.querySelector('svg');
+    var FLIPK = 1319;                       // the renderer's y-flip constant
+
+    // the name's own centre line
+    var nx0 = Infinity, nx1 = -Infinity;
+    letters.forEach(function (lg) {
+      var b = lg.getBBox();
+      nx0 = Math.min(nx0, b.x); nx1 = Math.max(nx1, b.x + b.width);
+    });
+    var nameC = (nx0 + nx1) / 2;
+
+    // the house line runs wider than the name and is not struck on the same
+    // centre; hang it from the name's axis so the two read as one stack
+    var ub = under.getBBox();
+    under.setAttribute('transform',
+      'translate(' + (nameC - (ub.x + ub.width / 2)).toFixed(2) + ',0)');
+
+    /* The viewBox handed to the renderer is generous: the drawn ink starts
+       well inside it, which pushed the whole lockup off the page's centre
+       line on a phone. Refit the box to the ink that is actually there, then
+       publish how far the name's centre still sits from the box centre as a
+       fraction of the box width. The phone layout applies that as a nudge, so
+       the name lands on the axis at any size, while the desktop column keeps
+       the mark flush with its left edge. */
+    var ink = g.getBBox();
+    var vbH = ink.height;
+    svg.setAttribute('viewBox',
+      ink.x + ' ' + (FLIPK - (ink.y + ink.height)) + ' ' + ink.width + ' ' + vbH);
+    var nudge = (nameC - (ink.x + ink.width / 2)) / ink.width;
+    host.style.setProperty('--wm-nudge', (-nudge * 100).toFixed(3) + '%');
+
+    letters.vbH = vbH;
     document.documentElement.classList.add('has-wordmark');
     return letters;
   }
@@ -270,7 +311,7 @@
       // rotateX the typed version used, and translations in user units scale
       // with the artwork
       heroSplit = { chars: letters, under: letters.under, isWordmark: true };
-      gsap.set(letters, { y: 363, opacity: 0, color: '#fefefe' });
+      gsap.set(letters, { y: (letters.vbH || 612) * 0.6, opacity: 0, color: '#fefefe' });
       gsap.set(letters.under, { opacity: 0 });
       return;
     }

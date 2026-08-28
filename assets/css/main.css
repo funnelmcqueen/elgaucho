@@ -465,7 +465,10 @@ html.has-wordmark .hero__titleText {
   .hero__content { display: contents; }
   .hero__eyebrow { order: 1; margin-bottom: 0; font-size: 10.5px; letter-spacing: 0.18em; }
   .hero__title   { order: 2; font-size: clamp(38px, 10.5vw, 72px); }
+  /* centred column: the mark is centred as a box, and the nudge published by
+     the mount puts the name itself on the axis rather than the box */
   .hero__wordmark { margin-left: auto; margin-right: auto; }
+  .hero__wordmark svg { transform: translateX(var(--wm-nudge, 0)); }
   /* the phone gets the name, the man and the plate; the sentence waits inside */
   .hero__sub     { display: none; }
   /* he holds the centre line and stands on the print, presenting it */
