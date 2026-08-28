@@ -579,12 +579,17 @@
     var rail = document.getElementById('descentRail');
     var mm = gsap.matchMedia();
 
-    mm.add('(max-height: 560px)', function () {
+    /* The drawn corridor is eight large 3D surfaces held in one perspective.
+       On a phone that is enough compositing to have the tab killed outright,
+       which takes the whole page with it, so phones get the flat telling of
+       the same section instead: the text, the vault photographs, no descent.
+       A section that reads is worth more than one that crashes. */
+    mm.add('(max-width: 760px), (max-height: 560px)', function () {
       section.classList.add('is-static');
       return function () { section.classList.remove('is-static'); };
     });
 
-    mm.add('(min-height: 561px)', function () {
+    mm.add('(min-width: 761px) and (min-height: 561px)', function () {
       section.classList.remove('is-static');
       var N = segs.length, CYC = 2.2;
       var planes = Array.prototype.slice.call(tunnel.querySelectorAll('.t3d__plane'));
