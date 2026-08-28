@@ -820,7 +820,11 @@ html:not(.js) .loader, .is-static-page .loader { display: none; }
 /* corridor surfaces: stone joints stream past as you walk */
 .t3d__plane {
   position: absolute; left: 50%; top: 56%;
-  will-change: transform; backface-visibility: visible;
+  backface-visibility: visible;
+  /* No will-change here. These surfaces are enormous (the walls alone are
+     4200x1400) and their transforms are set once and never animate; only the
+     world above them moves. Hinting transform pinned every one of them into
+     its own GPU layer, which is what was killing phone tabs in the tunnel. */
 }
 /* masonry cut as inline SVG so joints stagger like real coursing and
    feTurbulence lends the stone its grain; everything streams on --walk */
@@ -829,7 +833,7 @@ html:not(.js) .loader, .is-static-page .loader { display: none; }
   background:
     linear-gradient(90deg, rgba(6, 8, 8, 0) 42%, rgba(6, 8, 8, 0.34) 82%, #060808 100%),
     linear-gradient(180deg, rgba(6, 8, 8, 0.78) 0%, rgba(6, 8, 8, 0.12) 30%, transparent 50%, transparent 72%, rgba(6, 8, 8, 0.85) 100%),
-    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='592' height='1400'><radialGradient id='w'><stop offset='0' stop-color='%23c8ae88' stop-opacity='0.30'/><stop offset='0.5' stop-color='%23c8ae88' stop-opacity='0.10'/><stop offset='1' stop-color='%23c8ae88' stop-opacity='0'/></radialGradient><ellipse cx='296' cy='520' rx='285' ry='440' fill='url(%23w)'/></svg>"),
+    radial-gradient(285px 440px at 296px 520px, rgba(200, 174, 136, 0.30), rgba(200, 174, 136, 0.10) 50%, transparent 100%),
     url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='344' height='232'><filter id='n' x='0' y='0' width='100%25' height='100%25'><feTurbulence type='fractalNoise' baseFrequency='0.12 0.1' numOctaves='3' seed='7' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='344' height='232' fill='%230b0704'/><g stroke='%23070402' stroke-width='2'><rect x='4' y='4' width='164' height='108' rx='2' fill='%2326190c'/><rect x='176' y='4' width='164' height='108' rx='2' fill='%23221708'/><rect x='90' y='120' width='164' height='108' rx='2' fill='%23291c0f'/><rect x='262' y='120' width='164' height='108' rx='2' fill='%231f1506'/><rect x='-82' y='120' width='164' height='108' rx='2' fill='%231f1506'/></g><g fill='%239b6c2a' opacity='0.1'><rect x='8' y='7' width='156' height='3'/><rect x='180' y='7' width='156' height='3'/><rect x='94' y='123' width='156' height='3'/><rect x='266' y='123' width='74' height='3'/><rect x='-78' y='123' width='156' height='3'/></g><rect width='344' height='232' filter='url(%23n)' opacity='0.12'/></svg>"),
     linear-gradient(180deg, #1d150c, #130e09);
   background-size: auto, auto, 592px 1400px, 344px 232px, auto;
@@ -846,7 +850,7 @@ html:not(.js) .loader, .is-static-page .loader { display: none; }
   background-image:
     linear-gradient(270deg, rgba(6, 8, 8, 0) 42%, rgba(6, 8, 8, 0.34) 82%, #060808 100%),
     linear-gradient(180deg, rgba(6, 8, 8, 0.78) 0%, rgba(6, 8, 8, 0.12) 30%, transparent 50%, transparent 72%, rgba(6, 8, 8, 0.85) 100%),
-    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='592' height='1400'><radialGradient id='w'><stop offset='0' stop-color='%23c8ae88' stop-opacity='0.30'/><stop offset='0.5' stop-color='%23c8ae88' stop-opacity='0.10'/><stop offset='1' stop-color='%23c8ae88' stop-opacity='0'/></radialGradient><ellipse cx='296' cy='520' rx='285' ry='440' fill='url(%23w)'/></svg>"),
+    radial-gradient(285px 440px at 296px 520px, rgba(200, 174, 136, 0.30), rgba(200, 174, 136, 0.10) 50%, transparent 100%),
     url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='344' height='232'><filter id='n' x='0' y='0' width='100%25' height='100%25'><feTurbulence type='fractalNoise' baseFrequency='0.12 0.1' numOctaves='3' seed='7' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='344' height='232' fill='%230b0704'/><g stroke='%23070402' stroke-width='2'><rect x='4' y='4' width='164' height='108' rx='2' fill='%2326190c'/><rect x='176' y='4' width='164' height='108' rx='2' fill='%23221708'/><rect x='90' y='120' width='164' height='108' rx='2' fill='%23291c0f'/><rect x='262' y='120' width='164' height='108' rx='2' fill='%231f1506'/><rect x='-82' y='120' width='164' height='108' rx='2' fill='%231f1506'/></g><g fill='%239b6c2a' opacity='0.1'><rect x='8' y='7' width='156' height='3'/><rect x='180' y='7' width='156' height='3'/><rect x='94' y='123' width='156' height='3'/><rect x='266' y='123' width='74' height='3'/><rect x='-78' y='123' width='156' height='3'/></g><rect width='344' height='232' filter='url(%23n)' opacity='0.12'/></svg>"),
     linear-gradient(180deg, #1d150c, #130e09);
   /* lamps alternate sides, so this wall's pools sit half a bay out of step */
@@ -896,6 +900,11 @@ html:not(.js) .loader, .is-static-page .loader { display: none; }
 /* outer facets run wide so their edges tuck behind the wall tops --
    no daylight at the springing line */
 .t3d__vaultL2, .t3d__vaultR2 { width: 340px; }
+@media (max-width: 760px) {
+  /* two more 340x5400 surfaces is memory a phone does not have to spare, and
+     at the scale the corridor is drawn there they sit outside the frame */
+  .t3d__vaultL2, .t3d__vaultR2 { display: none; }
+}
 .t3d__seg {
   position: absolute; left: 50%; top: 56%;
   width: min(880px, 74vw); aspect-ratio: 5 / 6;

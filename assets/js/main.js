@@ -324,7 +324,11 @@
       var wind = (0.58 * Math.sin(wt * 0.61) + 0.34 * Math.sin(wt * 0.27 + 1.7) +
                   0.12 * Math.sin(wt * 3.07)) * (0.75 + 0.42 * cur.energy);
 
-      if (heroRiderH) {
+      // Once the hero is off the screen he is still being redrawn every frame,
+      // and he is a hundred-odd paths: that cost was riding along underneath
+      // the tunnel, which is the heaviest thing on the page. The small mark in
+      // the bar keeps going, since that one stays in view.
+      if (heroRiderH && heroExit < 1) {
         heroRiderH.state.energy = cur.energy + heroBoost * 0.4;
         heroRiderH.setPose(phase, lasso, wind);
       }
