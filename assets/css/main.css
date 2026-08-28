@@ -41,6 +41,12 @@
   --sans: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
 
   --nav-h: 76px;
+  /* the strip iOS keeps for the status bar and the notch. With
+     viewport-fit=cover the page owns the whole screen, so the bar has to
+     paint into it or the page shows through above the header. */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --bar: calc(var(--nav-h) + env(safe-area-inset-top, 0px));
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -240,10 +246,12 @@ html:not(.js) .loader, .is-static-page .loader { display: none; }
    ============================================================ */
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 900;
-  height: var(--nav-h);
+  height: var(--bar);
+  /* its own layer, so iOS does not let it drift during momentum scrolling */
+  will-change: transform;
   display: grid; grid-template-columns: auto 1fr auto; align-items: center;
   column-gap: clamp(16px, 2.4vw, 34px);
-  padding: 0 clamp(18px, 3vw, 40px);
+  padding: var(--safe-top) clamp(18px, 3vw, 40px) 0;
   transition: background 0.5s ease, border-color 0.5s ease,
     transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
   border-bottom: 1px solid transparent;
@@ -341,7 +349,7 @@ html:not(.js) .loader, .is-static-page .loader { display: none; }
   background: var(--quebracho);
   display: flex; flex-direction: column; align-items: flex-start;
   justify-content: center;
-  padding: calc(var(--nav-h) + 16px) clamp(24px, 8vw, 80px) 40px;
+  padding: calc(var(--bar) + 16px) clamp(24px, 8vw, 80px) calc(40px + var(--safe-bottom));
   gap: 28px;
   visibility: hidden;
   overflow-y: auto; -webkit-overflow-scrolling: touch;
@@ -407,7 +415,7 @@ html:not(.js) .loader, .is-static-page .loader { display: none; }
 .hero__grid {
   position: relative; z-index: 4;
   width: 100%; max-width: 1240px; margin: 0 auto;
-  padding: calc(var(--nav-h) + clamp(20px, 4vh, 48px)) clamp(20px, 4vw, 48px) clamp(28px, 5vh, 60px);
+  padding: calc(var(--bar) + clamp(20px, 4vh, 48px)) clamp(20px, 4vw, 48px) clamp(28px, 5vh, 60px);
   display: grid; grid-template-columns: 1.02fr 0.98fr;
   gap: clamp(30px, 5vw, 82px); align-items: center;
 }
@@ -483,7 +491,7 @@ html.has-wordmark .hero__titleText {
     display: flex; flex-direction: column;
     align-items: center; text-align: center;
     gap: clamp(10px, 1.4vh, 16px);
-    padding-top: calc(var(--nav-h) + clamp(14px, 2.4vh, 30px));
+    padding-top: calc(var(--bar) + clamp(14px, 2.4vh, 30px));
     padding-bottom: clamp(18px, 2.4vh, 32px);
   }
   .hero__content { display: contents; }
@@ -909,7 +917,7 @@ html.has-wordmark .hero__titleText {
    ============================================================ */
 .carta-page { background: var(--noche); }
 .carta-head {
-  padding: calc(var(--nav-h) + clamp(40px, 7vh, 90px)) clamp(20px, 4vw, 48px) clamp(38px, 6vh, 74px);
+  padding: calc(var(--bar) + clamp(40px, 7vh, 90px)) clamp(20px, 4vw, 48px) clamp(38px, 6vh, 74px);
   max-width: 1240px; margin: 0 auto; text-align: center;
 }
 /* the drawn name stands above the page's own title, as it does on a printed
@@ -1274,7 +1282,7 @@ html.has-wordmark .hero__titleText {
   position: absolute; inset: 0; z-index: 3;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: clamp(22px, 3.2vh, 40px);
-  padding: calc(var(--nav-h) + 14px) clamp(20px, 4vw, 56px) 30px;
+  padding: calc(var(--bar) + 14px) clamp(20px, 4vw, 56px) 30px;
   opacity: 0; visibility: hidden;
 }
 .vault__photos {
@@ -1612,7 +1620,8 @@ html:not(.js) .filmstrip__row figure, .filmstrip.is-static .filmstrip__row figur
    carries the brand. It sits under the menu overlay, never over it.
    ============================================================ */
 .wa {
-  position: fixed; right: clamp(16px, 2.4vw, 30px); bottom: clamp(16px, 2.4vw, 30px);
+  position: fixed; right: clamp(16px, 2.4vw, 30px);
+  bottom: calc(clamp(16px, 2.4vw, 30px) + var(--safe-bottom));
   z-index: 880;
   width: 54px; height: 54px; border-radius: 50%;
   display: grid; place-items: center;
