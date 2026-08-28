@@ -255,7 +255,18 @@ html:not(.js) .loader, .is-static-page .loader { display: none; }
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
   border-bottom-color: var(--line-dark);
 }
-.nav__links { display: flex; gap: 28px; }
+.nav__links { display: flex; align-items: center; gap: 21px; }
+/* the bar carries two kinds of destination: four chapters of this page, and
+   two printed lists that are pages of their own. The hairline is what tells
+   the visitor that clicking right of it leaves the page. */
+.nav__rule {
+  width: 1px; height: 15px; background: var(--line-dark); flex: none; margin: 0 3px;
+}
+.nav__link--list { color: var(--bronze-text); }
+.nav__link--list:hover { color: var(--bone); }
+/* and on those pages, the bar says which one you are reading */
+.nav__link.is-current { color: var(--bone); }
+.nav__link.is-current::after { transform: scaleX(1); transform-origin: left center; }
 .nav__link {
   font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--bone); position: relative; padding: 6px 0;
@@ -335,6 +346,12 @@ html:not(.js) .loader, .is-static-page .loader { display: none; }
   border-bottom: 1px solid var(--line-dark);
 }
 .menu-overlay__link em { font-size: clamp(32px, 8vw, 52px); color: var(--bone); }
+/* the same division the bar makes, spelled out where there is room for it */
+.menu-overlay__group {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--bronze-text); margin: 18px 0 2px;
+}
+.menu-overlay__group:first-child { margin-top: 0; }
 .menu-overlay__link span {
   font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cinder);
 }
@@ -1396,6 +1413,11 @@ html:not(.js) .filmstrip__row figure, .filmstrip.is-static .filmstrip__row figur
   transition: color 0.3s ease;
 }
 .footer__links a:hover, .footer__social a:hover { color: var(--brasa); }
+.footer__links--list { color: var(--bronze-text) !important; }
+/* the two lists get a real button where the page has just talked about them */
+.cocina__tasting-cta { grid-column: 1 / -1; margin-top: 22px; }
+.vault__cta { margin-top: 22px; }
+.vault__cta .btn, .cocina__tasting-cta .btn { display: inline-block; }
 .footer__fine { font-size: 13px; color: var(--cinder); }
 
 /* ============================================================

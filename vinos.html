@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Ibarra+Real+Nova:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/main.css?v=71">
+  <link rel="stylesheet" href="assets/css/main.css?v=72">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -23,13 +23,16 @@
     <a class="nav__brand" href="index.html" aria-label="El Gaucho Tirana, back to the top">
       <span class="nav__brandRider" id="navRider" aria-hidden="true"></span>
     </a>
+    <!-- two kinds of destination, and the bar should say so: the chapters of
+         the house on the left, the two printed lists on the right -->
     <nav class="nav__links" aria-label="Primary">
       <a href="index.html#cortes" class="nav__link">Los Cortes</a>
       <a href="index.html#cocina" class="nav__link">La Cocina</a>
       <a href="index.html#cantina" class="nav__link">La Cantina</a>
       <a href="index.html#sierra" class="nav__link">La Sierra</a>
-      <a href="carta.html" class="nav__link">La Carta</a>
-      <a href="vinos.html" class="nav__link">Los Vinos</a>
+      <span class="nav__rule" aria-hidden="true"></span>
+      <a href="carta.html" class="nav__link nav__link--list">La Carta</a>
+      <a href="vinos.html" class="nav__link nav__link--list is-current" aria-current="page">Los Vinos</a>
     </nav>
     <div class="nav__right">
       <a href="tel:+355696098888" class="nav__phone">+355 69 609 8888</a>
@@ -43,13 +46,15 @@
 
 <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
     <nav class="menu-overlay__links" aria-label="Menu">
+      <p class="menu-overlay__group">La casa</p>
       <a href="index.html#cortes" class="menu-overlay__link"><em>Los Cortes</em><span>The grill</span></a>
       <a href="index.html#cocina" class="menu-overlay__link"><em>La Cocina</em><span>The kitchen</span></a>
       <a href="index.html#cantina" class="menu-overlay__link"><em>La Cantina</em><span>The tunnel cellar</span></a>
       <a href="index.html#sierra" class="menu-overlay__link"><em>La Sierra</em><span>Cocteleria</span></a>
-      <a href="carta.html" class="menu-overlay__link"><em>La Carta</em><span>The full menu</span></a>
-      <a href="vinos.html" class="menu-overlay__link"><em>Los Vinos</em><span>The cellar list</span></a>
       <a href="index.html#visit" class="menu-overlay__link"><em>Visítanos</em><span>Find us</span></a>
+      <p class="menu-overlay__group">Las cartas</p>
+      <a href="carta.html" class="menu-overlay__link"><em>La Carta</em><span>65 dishes</span></a>
+      <a href="vinos.html" class="menu-overlay__link is-current" aria-current="page"><em>Los Vinos</em><span>246 labels</span></a>
     </nav>
     <a href="https://book.altaste.com/place/el-gaucho" target="_blank" rel="noopener" class="btn btn--brasa">Book a table</a>
   </div>
@@ -400,6 +405,8 @@
           <a href="index.html#cantina">La Cantina</a>
           <a href="index.html#sierra">La Sierra</a>
           <a href="index.html#visit">Visit</a>
+          <a href="carta.html" class="footer__links--list">La Carta</a>
+          <a href="vinos.html" class="footer__links--list is-current" aria-current="page">Los Vinos</a>
         </nav>
         <div class="footer__social">
           <a href="https://www.instagram.com/el_gaucho_tirana/" target="_blank" rel="noopener">Instagram</a>
