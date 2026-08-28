@@ -371,7 +371,13 @@ html:not(.js) .loader, .is-static-page .loader { display: none; }
   background-size: 620px 320px;
   mix-blend-mode: overlay; opacity: 0.42;
 }
-.hero__embers { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+/* a canvas is a replaced element: inset:0 alone leaves it at its intrinsic
+   300x150, so it sat in the top-left corner and everything drawn in it with
+   it. The explicit 100% is what actually stretches it over the hero. */
+.hero__embers {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  z-index: 2; pointer-events: none;
+}
 
 /* editorial split: the name holds the left page, one photograph the right */
 .hero__grid {

@@ -857,6 +857,23 @@
     }
     for (var i = 0; i < COUNT; i++) { var p = {}; spawn(p, true); particles.push(p); }
 
+    /* WIND — thin lines tearing right to left across the hero. Every device
+       gets them; a line is cheap to draw where a particle is not. */
+    var GUSTS = window.innerWidth < 720 ? 16 : 26;
+    var streaks = [];
+    function windSpawn(s, first) {
+      s.y = H * (0.04 + Math.random() * 0.92);
+      s.x = first ? Math.random() * W : W + 30 + Math.random() * 260;
+      // mostly short scratches, the occasional long tear
+      s.len = 70 + Math.random() * Math.random() * 340;
+      s.sp = 8 + Math.random() * 17;          // right to left, and quick
+      s.a = 0.11 + Math.random() * 0.26;      // seen, but still air
+      s.w = 0.6 + Math.random() * 1.2;
+      s.rake = -1.5 - Math.random() * 5;      // a shallow downward rake
+    }
+    for (var s0 = 0; s0 < GUSTS; s0++) { var s = {}; windSpawn(s, true); streaks.push(s); }
+    var windT = 0;
+
     var visible = true;
     ScrollTrigger.create({
       trigger: '.hero', start: 'top bottom', end: 'bottom top',
@@ -868,6 +885,27 @@
       ctx.clearRect(0, 0, W, H);
       ctx.globalCompositeOperation = 'lighter';
       var rush = heroExit; // the dive turns risers into streaks
+
+      // the wind runs first, so the embers ride over it
+      windT += 0.016;
+      var gust = 0.72 + 0.28 * Math.sin(windT * 0.63) + 0.14 * Math.sin(windT * 0.24 + 1.7);
+      for (var k = 0; k < streaks.length; k++) {
+        var st = streaks[k];
+        st.x -= st.sp * gust * (1 + rush * 1.8);
+        st.y += st.rake * 0.06;
+        if (st.x + st.len < -20) { windSpawn(st, false); continue; }
+        var g = ctx.createLinearGradient(st.x, st.y, st.x + st.len, st.y - st.rake);
+        var av = st.a * gust;
+        g.addColorStop(0, 'rgba(200, 174, 136, 0)');
+        g.addColorStop(0.42, 'rgba(200, 174, 136, ' + av.toFixed(3) + ')');
+        g.addColorStop(1, 'rgba(200, 174, 136, 0)');
+        ctx.beginPath();
+        ctx.strokeStyle = g;
+        ctx.lineWidth = st.w;
+        ctx.moveTo(st.x, st.y);
+        ctx.lineTo(st.x + st.len, st.y - st.rake);
+        ctx.stroke();
+      }
       for (var i = 0; i < particles.length; i++) {
         var p = particles[i];
         p.life++;
