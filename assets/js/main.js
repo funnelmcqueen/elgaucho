@@ -975,35 +975,15 @@
 
 
 
+  /* The hero used to dissolve on the way out -- the name scattered, the mark,
+     the line and the buttons faded, the plate dimmed -- all while they were
+     still on the screen and still being read. It simply scrolls away now.
+     The tracker stays: the embers and the rider's gait both read heroExit. */
   function initHeroDive() {
-    if (!heroSplit) return;
-    var chars = heroSplit.chars;
-    var mid = (chars.length - 1) / 2;
-    var tl = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: {
-        trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 0.5,
-        onUpdate: function (self) { heroExit = self.progress; }
-      }
+    ScrollTrigger.create({
+      trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 0.5,
+      onUpdate: function (self) { heroExit = self.progress; }
     });
-    tl.fromTo('#heroPlate', { y: 0 }, {
-      y: -70, opacity: 0.15, immediateRender: false, ease: 'power1.in', duration: 0.8
-    }, 0);
-    chars.forEach(function (ch, i) {
-      var d = mid ? (i - mid) / mid : 0;
-      tl.to(ch, heroSplit.isWordmark
-        ? { x: d * 150, y: -(0.30 + Math.abs(d) * 0.10) * WM_VB.h,
-            opacity: 0, ease: 'power1.in', duration: 0.62 }
-        : { xPercent: d * 90, yPercent: -30 - Math.abs(d) * 10,
-            opacity: 0, ease: 'power1.in', duration: 0.62 },
-      0.12);
-    });
-    tl.to(['#heroRider', '#heroEyebrow', '#heroSub', '#heroCta'], {
-      opacity: 0, y: -26, duration: 0.35, ease: 'power1.in'
-    }, 0);
-    if (heroSplit.under) {
-      tl.to(heroSplit.under, { opacity: 0, ease: 'power1.in', duration: 0.4 }, 0.12);
-    }
   }
 
 
