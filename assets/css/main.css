@@ -473,7 +473,9 @@ html.has-wordmark .hero__titleText {
                    align-self: center; position: relative; z-index: 2;
                    margin: 2px 0 24px; }
   .hero__plate   { order: 5; width: 100%; max-width: 520px; }
-  .hero__plate img { height: min(31vh, 272px); }
+  /* the drawn lockup carries the house line under the name, so it stands
+     taller than the typed title did; the print gives that height back */
+  .hero__plate img { height: min(27vh, 238px); }
   .hero__plate figcaption { text-align: center; }
   /* the ask closes the page instead of interrupting it, and stays on the axis */
   .hero__cta     { order: 6; margin-top: 2px; flex-direction: column;
