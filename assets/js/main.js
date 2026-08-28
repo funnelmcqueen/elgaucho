@@ -749,9 +749,15 @@
                 wall, floor and vault surfaces that carry nearly all the weight
          full — exactly what the desktop draws                                */
     var tunnelMode = new URLSearchParams(window.location.search).get('tunnel');
-    if (tunnelMode) section.classList.add('t-' + tunnelMode);
-    var FLAT_Q = tunnelMode ? '(max-height: 0px)' : '(max-width: 760px), (max-height: 560px)';
-    var LIVE_Q = tunnelMode ? '(min-width: 1px)' : '(min-width: 761px) and (min-height: 561px)';
+    if (tunnelMode && tunnelMode !== 'flat') section.classList.add('t-' + tunnelMode);
+    // Phones walk the corridor too, now that every surface is cut to the depth
+    // the screen can actually see. Only a window too short to hold it -- a
+    // phone on its side -- still gets the flat telling. ?tunnel=flat forces
+    // that back, ?tunnel=lite drops the stone, ?tunnel=full forces it anywhere.
+    var FLAT_Q = tunnelMode === 'flat' ? '(min-width: 1px)'
+               : tunnelMode ? '(max-height: 0px)' : '(max-height: 560px)';
+    var LIVE_Q = tunnelMode === 'flat' ? '(max-height: 0px)'
+               : tunnelMode ? '(min-width: 1px)' : '(min-height: 561px)';
 
     mm.add(FLAT_Q, function () {
       section.classList.add('is-static');
