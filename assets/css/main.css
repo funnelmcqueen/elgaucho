@@ -547,7 +547,10 @@ html.has-wordmark .hero__titleText {
 .manifesto__grid {
   max-width: 1240px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px);
   display: grid;
-  grid-template-columns: minmax(0, 1.06fr) minmax(190px, 0.34fr) minmax(0, 0.86fr);
+  /* two columns, not three: the third was the facts list, which ran out
+     halfway down the story and left an L-shaped hole under it. The story
+     and the photographs are the only two things that belong on this row. */
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
   gap: clamp(28px, 3.4vw, 56px);
   align-items: start;
 }
@@ -630,10 +633,38 @@ html.has-wordmark .hero__titleText {
   .crew__grid { gap: 14px; }
 }
 
-.facts { position: relative; padding-top: 6px; }
-.facts dl { border-top: 1px solid var(--line-light); }
+/* one photograph on this row, cropped to stand as tall as the story beside
+   it. Two stacked ran to twice the height of the prose and left the hole
+   this section was being blamed for. */
+.manifesto__media .plate__img { aspect-ratio: 4 / 5; }
+
+/* the house in brief, read across the measure as one ruled band */
+.brief {
+  max-width: 1240px; margin: clamp(38px, 4.5vw, 64px) auto 0;
+  padding: 0 clamp(20px, 4vw, 48px);
+}
+.facts { position: relative; }
+.facts dl {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--line-light);
+  border-bottom: 1px solid var(--line-light);
+}
 .facts dl > div {
-  padding: 15px 0 16px; border-bottom: 1px solid var(--line-light);
+  padding: clamp(16px, 1.6vw, 22px) clamp(14px, 1.6vw, 26px) clamp(18px, 1.8vw, 24px) 0;
+}
+.facts dl > div + div {
+  border-left: 1px solid var(--line-light);
+  padding-left: clamp(14px, 1.6vw, 26px);
+}
+@media (max-width: 780px) {
+  .facts dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .facts dl > div:nth-child(odd) + div { border-left: 1px solid var(--line-light); }
+  .facts dl > div:nth-child(3) { border-left: 0; padding-left: 0; border-top: 1px solid var(--line-light); }
+  .facts dl > div:nth-child(4) { border-top: 1px solid var(--line-light); }
+}
+@media (max-width: 460px) {
+  .facts dl { grid-template-columns: 1fr; }
+  .facts dl > div + div { border-left: 0; padding-left: 0; border-top: 1px solid var(--line-light); }
 }
 .facts dt {
   font-family: var(--sans); font-size: 10px; letter-spacing: 0.24em;
