@@ -114,8 +114,11 @@
       for (var i = 0; i < els.length; i++) els[i].setAttribute('transform', s);
     }
 
-    function setPose(p, q) {
+    /* p: stride phase, q: whirl phase, w: wind, -1..1, on its own clock so
+       the air is not just another harmonic of the gallop */
+    function setPose(p, q, w) {
       var en = state.energy;
+      var wd = w || 0;
       var sp = function (ph) { return Math.sin(TAU * (p - ph)); };
       var bounce = (Math.cos(TAU * p) * 13 - 4) * en;
       var pitch = 1.9 * en * Math.sin(TAU * p + 0.8);
@@ -130,10 +133,12 @@
       apply('legB', limb(8.0 * en * sp(0.09), PIVOT.legB));
       apply('legC', limb(7.5 * en * sp(0.50), PIVOT.legC));
       apply('legD', limb(9.0 * en * sp(0.58), PIVOT.legD));
-      apply('tail', limb(5.5 * en * sp(0.22), PIVOT.tail));
-      apply('horseHead', limb(2.2 * en * sp(0.10), PIVOT.horseHead));
+      // the loose things take the wind: tail hardest, then the sleeve, and
+      // just enough at the head to move the mane
+      apply('tail', limb(5.5 * en * sp(0.22) + 7.0 * wd, PIVOT.tail));
+      apply('horseHead', limb(2.2 * en * sp(0.10) + 1.3 * wd, PIVOT.horseHead));
       apply('riderHead', limb(2.2 * en * sp(0.175), PIVOT.riderHead));
-      apply('sleeve', limb(4.5 * en * sp(0.27), PIVOT.sleeve));
+      apply('sleeve', limb(4.5 * en * sp(0.27) + 3.0 * wd, PIVOT.sleeve));
       apply('armR', Marm);
       apply('rope', mmul(Marm, mmul(trans(0, E), scaleXAt(k, PIVOT.fist[0]))));
       apply('ball', mmul(Marm, trans((k - 1) * BALL_U, E)));

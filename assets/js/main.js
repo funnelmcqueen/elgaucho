@@ -290,7 +290,7 @@
      ---------------------------------------------------------- */
   function initRiderMotion() {
     if (!heroRiderH && !navRiderH) return;
-    var phase = 0, lasso = 0;
+    var phase = 0, lasso = 0, wt = 0;
     var cur = { energy: 0.9, stride: 1.7, rps: 0.9 };
     var lastY = window.scrollY, speed = 0, lastT = performance.now();
 
@@ -316,14 +316,22 @@
 
       phase = (phase + dt * (cur.stride + heroBoost * 1.2)) % 1;
       lasso = (lasso + dt * (cur.rps + heroBoost * 0.5)) % 1;
+
+      // Wind on the pampa: two slow waves that almost never line up, so gusts
+      // swell and pass instead of ticking, and a light flutter riding on top.
+      // Faster riding means more air against him.
+      wt += dt;
+      var wind = (0.58 * Math.sin(wt * 0.61) + 0.34 * Math.sin(wt * 0.27 + 1.7) +
+                  0.12 * Math.sin(wt * 3.07)) * (0.75 + 0.42 * cur.energy);
+
       if (heroRiderH) {
         heroRiderH.state.energy = cur.energy + heroBoost * 0.4;
-        heroRiderH.setPose(phase, lasso);
+        heroRiderH.setPose(phase, lasso, wind);
       }
-      // the mark in the bar rides the same stride, so they are one animal
+      // the mark in the bar rides the same stride and the same weather
       if (navRiderH) {
         navRiderH.state.energy = cur.energy + heroBoost * 0.4;
-        navRiderH.setPose(phase, lasso);
+        navRiderH.setPose(phase, lasso, wind);
       }
       // setPose has just rewritten his parts; lengthen the rope on top of that
       cast.phase = phase; cast.lasso = lasso;
