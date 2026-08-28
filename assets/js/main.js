@@ -32,7 +32,11 @@
 
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, SplitText);
 
+  /* data-static is how a page that is all content and no hero -- the carta --
+     opts out of the whole scroll engine while still getting the nav, the
+     riding marks and the menu overlay */
   var staticMode = window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+    document.documentElement.hasAttribute('data-static') ||
     new URLSearchParams(window.location.search).has('static');
   var loader = document.getElementById('loader');
 
