@@ -406,6 +406,17 @@ html:not(.js) .loader, .is-static-page .loader { display: none; }
 }
 .hero__title .word { display: inline-block; white-space: nowrap; }
 .hero__title .char { display: inline-block; }
+/* The name is set in the logo's own letters. The typed h1 stays in the markup
+   for search engines and for anyone without JavaScript, and is only taken out
+   of sight once the drawn lockup has actually mounted. */
+.hero__title { width: 100%; }
+.hero__wordmark { display: block; width: 100%; max-width: 640px; color: inherit; }
+.hero__wordmark:empty { display: none; }
+.hero__wordmark svg { display: block; width: 100%; height: auto; overflow: visible; }
+html.has-wordmark .hero__titleText {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
 .hero__sub {
   margin: 22px 0 0; max-width: 44ch;
   font-size: clamp(15px, 1.35vw, 17px); line-height: 1.65; color: var(--cinder);
@@ -454,6 +465,7 @@ html:not(.js) .loader, .is-static-page .loader { display: none; }
   .hero__content { display: contents; }
   .hero__eyebrow { order: 1; margin-bottom: 0; font-size: 10.5px; letter-spacing: 0.18em; }
   .hero__title   { order: 2; font-size: clamp(38px, 10.5vw, 72px); }
+  .hero__wordmark { margin-left: auto; margin-right: auto; }
   /* the phone gets the name, the man and the plate; the sentence waits inside */
   .hero__sub     { display: none; }
   /* he holds the centre line and stands on the print, presenting it */

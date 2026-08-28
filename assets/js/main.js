@@ -127,6 +127,7 @@
     if (cantinaEl) cantinaEl.classList.add('is-static');
     var strip = document.getElementById('filmstrip');
     if (strip) strip.classList.add('is-static');
+    buildWordmark();   // the drawn name, held still
     mountGaucho('creamSeal', 2, true);
     mountGaucho('footerGaucho', 1, true);
     mountHorse('heroRider', true);
@@ -192,7 +193,79 @@
   gsap.set(['#heroRider', '#heroEyebrow', '#heroSub', '#heroCta', '#heroPlate', '#nav'], { autoAlpha: 0 });
   gsap.set('#heroPlate', { y: 26 });
 
+  /* The name, in the logo's own letters.
+     The artwork's 'text' part carries the big EL GAUCHO lockup, a small
+     strapline under it and one full-width ornament behind both. Only the
+     lockup is wanted here -- the strapline would just repeat the eyebrow
+     sitting above it -- so the mount keeps the paths inside the lockup's
+     band and drops the rest. The kept paths are then gathered into one group
+     per letter, which lets the forge choreography below stagger real
+     letterforms exactly as it staggered typed characters. */
+  var WM_VB = { x: 1289, y: 433, w: 1512, h: 308 };  // the lockup, y-flipped
+  function buildWordmark() {
+    var host = document.getElementById('heroWordmark');
+    if (!host || host.firstChild) return null;
+    if (!window.GauchoLogo || !window.GAUCHO_RECORDS) return null;
+    if (!window.GauchoLogo.create(host, {
+      ver: 1, parts: ['text'], viewBox: WM_VB, clip: false, static: true, autoplay: false
+    })) return null;
+
+    var g = host.querySelector('[data-part="text"]');
+    if (!g) { host.innerHTML = ''; return null; }
+    var kept = [];
+    Array.prototype.slice.call(g.querySelectorAll('path')).forEach(function (p) {
+      var b = p.getBBox();
+      if (b.y > 560 && b.y + b.height < 900) kept.push({ el: p, b: b });
+      else if (p.parentNode) p.parentNode.removeChild(p);
+    });
+    if (kept.length < 8) { host.innerHTML = ''; return null; }
+
+    // the tall paths are the letter skeletons; cluster those on x, then hand
+    // every serif and crossbar to the letter it belongs to
+    var anchors = kept.filter(function (k) { return k.b.height > 40; })
+                      .sort(function (a, b) { return a.b.x - b.b.x; });
+    var spans = [];
+    anchors.forEach(function (k) {
+      var last = spans[spans.length - 1];
+      if (last && k.b.x <= last.x1 - 2) last.x1 = Math.max(last.x1, k.b.x + k.b.width);
+      else spans.push({ x0: k.b.x, x1: k.b.x + k.b.width, els: [] });
+    });
+    if (!spans.length) { host.innerHTML = ''; return null; }
+    kept.forEach(function (k) {
+      var c = k.b.x + k.b.width / 2, best = 0, bestD = Infinity;
+      spans.forEach(function (s, i) {
+        var d = Math.abs((s.x0 + s.x1) / 2 - c);
+        if (d < bestD) { bestD = d; best = i; }
+      });
+      spans[best].els.push(k.el);
+    });
+
+    var NS = 'http://www.w3.org/2000/svg';
+    var letters = [];
+    spans.forEach(function (s) {
+      if (!s.els.length) return;
+      var lg = document.createElementNS(NS, 'g');
+      s.els.forEach(function (el) {
+        el.setAttribute('fill', 'currentColor');   // so the forge can colour it
+        lg.appendChild(el);
+      });
+      g.appendChild(lg);
+      letters.push(lg);
+    });
+    document.documentElement.classList.add('has-wordmark');
+    return letters;
+  }
+
   function buildHeroSplit() {
+    var letters = buildWordmark();
+    if (letters) {
+      // drawn letters take plain 2D transforms: an SVG group cannot carry the
+      // rotateX the typed version used, and translations in user units scale
+      // with the artwork
+      heroSplit = { chars: letters, isWordmark: true };
+      gsap.set(letters, { y: WM_VB.h * 1.18, opacity: 0, color: '#fefefe' });
+      return;
+    }
     heroSplit = SplitText.create(heroTitle, { type: 'words,chars', wordsClass: 'word', charsClass: 'char' });
     gsap.set(heroSplit.chars, {
       yPercent: 118, opacity: 0, rotateX: -40,
@@ -231,10 +304,10 @@
       // he eases up as he reaches his post
       .to('#heroRider', { x: 0, duration: 1.4, ease: 'power2.out' }, 1.75)
       // the name forges itself while he crosses it
-      .to(heroSplit.chars, {
-        yPercent: 0, opacity: 1, rotateX: 0,
-        duration: 1.15, stagger: 0.045, ease: 'expo.out'
-      }, 1.1)
+      .to(heroSplit.chars, heroSplit.isWordmark
+        ? { y: 0, opacity: 1, duration: 1.15, stagger: 0.045, ease: 'expo.out' }
+        : { yPercent: 0, opacity: 1, rotateX: 0, duration: 1.15, stagger: 0.045, ease: 'expo.out' },
+      1.1)
       .add(function () {
         if (!emberApi) return;
         var hero = document.getElementById('hero');
@@ -251,15 +324,20 @@
       .to('#heroSub', { autoAlpha: 1, duration: 0.9 }, 2.2)
       .to('#heroCta', { autoAlpha: 1, y: 0, duration: 0.8 }, 2.35)
       .to('#nav', { autoAlpha: 1, duration: 0.7 }, 2.5)
-      // the forge cools in two stages: white heat to ember amber to bone
-      .to(heroSplit.chars, {
-        color: '#c8ae88', textShadow: '0 0 14px rgba(200, 174, 136, 0.45)',
-        duration: 0.9, stagger: 0.04, ease: 'power1.inOut'
-      }, 1.85)
-      .to(heroSplit.chars, {
-        color: '#f5e4ca', textShadow: '0 0 0px rgba(200, 174, 136, 0)',
-        duration: 1.6, stagger: 0.04, ease: 'power2.out'
-      }, 2.7)
+      // the forge cools in two stages: white heat to ember amber to bone.
+      // The drawn letters cool by colour alone -- an animated glow on eight
+      // SVG groups is a blur filter re-rendering every frame, and the phones
+      // that struggle with the tunnel do not need another one.
+      .to(heroSplit.chars, heroSplit.isWordmark
+        ? { color: '#c8ae88', duration: 0.9, stagger: 0.04, ease: 'power1.inOut' }
+        : { color: '#c8ae88', textShadow: '0 0 14px rgba(200, 174, 136, 0.45)',
+            duration: 0.9, stagger: 0.04, ease: 'power1.inOut' },
+      1.85)
+      .to(heroSplit.chars, heroSplit.isWordmark
+        ? { color: '#f5e4ca', duration: 1.6, stagger: 0.04, ease: 'power2.out' }
+        : { color: '#f5e4ca', textShadow: '0 0 0px rgba(200, 174, 136, 0)',
+            duration: 1.6, stagger: 0.04, ease: 'power2.out' },
+      2.7)
       .add(function () { ScrollTrigger.refresh(); });
 
     emberApi = startEmbers();
@@ -829,10 +907,12 @@
     }, 0);
     chars.forEach(function (ch, i) {
       var d = mid ? (i - mid) / mid : 0;
-      tl.to(ch, {
-        xPercent: d * 90, yPercent: -30 - Math.abs(d) * 10,
-        opacity: 0, ease: 'power1.in', duration: 0.62
-      }, 0.12);
+      tl.to(ch, heroSplit.isWordmark
+        ? { x: d * 150, y: -(0.30 + Math.abs(d) * 0.10) * WM_VB.h,
+            opacity: 0, ease: 'power1.in', duration: 0.62 }
+        : { xPercent: d * 90, yPercent: -30 - Math.abs(d) * 10,
+            opacity: 0, ease: 'power1.in', duration: 0.62 },
+      0.12);
     });
     tl.to(['#heroRider', '#heroEyebrow', '#heroSub', '#heroCta'], {
       opacity: 0, y: -26, duration: 0.35, ease: 'power1.in'
