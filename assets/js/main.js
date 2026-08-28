@@ -123,8 +123,8 @@
      fall back to the full logo's viewBox.
      ---------------------------------------------------------- */
   var WM_VB = { x: 929, y: 282, w: 2048, h: 612 };   // the lockup, y-flipped
-  function buildWordmark() {
-    var host = document.getElementById('heroWordmark');
+  function buildWordmark(id) {
+    var host = document.getElementById(id || 'heroWordmark');
     if (!host || host.firstChild) return null;
     if (!window.GauchoLogo || !window.GAUCHO_RECORDS) return null;
     if (!window.GauchoLogo.create(host, {
@@ -242,8 +242,10 @@
     if (cantinaEl) cantinaEl.classList.add('is-static');
     var strip = document.getElementById('filmstrip');
     if (strip) strip.classList.add('is-static');
-    buildWordmark();   // the drawn name, held still
+    buildWordmark();                  // the drawn name, held still
+    buildWordmark('cartaWordmark');   // and the same again on the carta
     mountGaucho('creamSeal', 2, true);
+    mountGaucho('cartaSeal', 2, true);
     mountGaucho('footerGaucho', 1, true);
     mountHorse('heroRider', true);
     mountHorse('navRider', true);
@@ -259,6 +261,32 @@
       if (target) setTimeout(function () { target.scrollIntoView(); }, 120);
     }
     return;
+  }
+
+  /* ----------------------------------------------------------
+     A PAGE WITHOUT THE HERO — the carta.
+     Everything below this point assumes the hero exists: the veil waits on
+     its photographs, the entrance rides into it, the dive scatters its name.
+     A page that is all content skips that machinery and takes the rest --
+     the riding marks, the nav, the scroll reveals further down.
+     ---------------------------------------------------------- */
+  var hasHero = !!document.getElementById('hero');
+  if (!hasHero) {
+    if (loader) loader.style.display = 'none';
+    buildWordmark('cartaWordmark');
+    navRiderH = mountHorse('navRider', false);
+    initRiderMotion();
+    initNavBasics(false);
+    initRideHome(false);
+    initNavLife();
+    [['cartaSeal', 2], ['footerGaucho', 1]].forEach(function (pair) {
+      var h = mountGaucho(pair[0], pair[1], false);
+      if (!h) return;
+      ScrollTrigger.create({
+        trigger: '#' + pair[0], start: 'top bottom', end: 'bottom top',
+        onToggle: function (self) { if (self.isActive) h.play(); else h.pause(); }
+      });
+    });
   }
 
   /* ----------------------------------------------------------
@@ -283,14 +311,15 @@
     var wait = Math.max(0, MIN_MS - (performance.now() - loaderStart));
     setTimeout(finishLoader, wait);
   }
-  CRITICAL.forEach(function (src) {
-    var img = new Image();
-    img.onload = img.onerror = function () { loadedCount++; maybeStart(); };
-    img.src = src;
-  });
-
-  // watchdog: never trap the visitor behind the veil
-  setTimeout(function () { if (!loaderDone) finishLoader(); }, 5000);
+  if (hasHero) {
+    CRITICAL.forEach(function (src) {
+      var img = new Image();
+      img.onload = img.onerror = function () { loadedCount++; maybeStart(); };
+      img.src = src;
+    });
+    // watchdog: never trap the visitor behind the veil
+    setTimeout(function () { if (!loaderDone) finishLoader(); }, 5000);
+  }
 
   function finishLoader() {
     if (loaderDone) return;
