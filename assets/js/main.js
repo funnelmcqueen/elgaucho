@@ -600,7 +600,13 @@
       section.classList.remove('is-static');
       var N = segs.length, CYC = 2.2;
       var planes = Array.prototype.slice.call(tunnel.querySelectorAll('.t3d__plane'));
-      var Z_FAR = -2400, Z_TRAVEL = 2660;
+      /* How far down the passage we actually draw. The fog takes the far end
+         to black long before this, so a phone can be given a shorter corridor
+         without losing anything you could have seen -- and every surface then
+         shrinks with it, which is the whole cost of the section. */
+      var deep = window.innerWidth <= 760 ? 1600 : 2400;
+      var Z_FAR = -deep, Z_TRAVEL = deep + 260;
+      var L_FAR = -deep * 0.79, L_TRAVEL = deep * 0.79 + 180;
 
       function dolly(p) {
         var vaultIn = Math.max(0, Math.min(1, (p - 0.78) / 0.14));
@@ -652,7 +658,7 @@
           // name is close enough to read
           var d = Math.abs(p - cj - 0.062);
           var bell = d < 0.045 ? 1 : Math.max(0, 1 - (d - 0.045) / 0.055);
-          var lz = -1900 + Math.max(0, Math.min(1, prog)) * 2080;
+          var lz = L_FAR + Math.max(0, Math.min(1, prog)) * L_TRAVEL;
           var dim = labels[k].hasAttribute('data-dim') ? 0.38 : 1; // the fresco stays faint
           labels[k].style.transform =
             'translate(-50%, -50%) translateX(var(--px)) translateZ(' + lz.toFixed(1) + 'px) rotateY(var(--ry))';
