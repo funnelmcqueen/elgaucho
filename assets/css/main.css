@@ -598,6 +598,27 @@ html.has-wordmark .hero__titleText {
   .people { max-width: none; }
 }
 
+/* what guests say about the people, set beneath the people themselves */
+.people__words {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 2.4vw, 32px);
+  margin: clamp(26px, 3.4vw, 38px) 0 0;
+  padding-top: clamp(20px, 2.6vw, 28px); border-top: 1px solid var(--line-light);
+}
+.people__words blockquote { margin: 0; }
+.people__words p {
+  font-family: var(--serif); font-style: italic; font-size: 16px;
+  line-height: 1.45; color: var(--tinto);
+}
+.people__words cite {
+  display: block; margin-top: 9px; font-style: normal;
+  font-family: var(--sans); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--bronze-text-light);
+}
+@media (max-width: 560px) {
+  .people__words { grid-template-columns: 1fr; gap: 20px; }
+}
+
 .facts { position: relative; padding-top: 6px; }
 .facts dl { border-top: 1px solid var(--line-light); }
 .facts dl > div {
