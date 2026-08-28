@@ -276,6 +276,7 @@ html:not(.js) .loader, .is-static-page .loader { display: none; }
 .nav__link {
   font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--bone); position: relative; padding: 6px 0;
+  white-space: nowrap;   /* or a squeezed bar breaks LOS CORTES over two lines */
 }
 .nav__link::after {
   content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%;
@@ -571,6 +572,32 @@ html.has-wordmark .hero__titleText {
 }
 
 /* the house, in brief: a ruled masthead column */
+/* the two who stand at the fire, matted like every other photograph here.
+   Names read first; the role sits under them in the small caps the facts use. */
+.people {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 24px);
+  max-width: 460px; margin: clamp(30px, 4vw, 44px) 0 0;
+}
+.people__one { margin: 0; }
+.people__one .plate__img { aspect-ratio: 5 / 7; }
+/* scoped past .on-cream .plate figcaption, which sets every other caption on
+   this ground in small right-aligned caps -- a person's name is not a caption */
+.on-cream .people__one figcaption {
+  margin-top: 12px; text-align: left;
+  font-family: var(--serif); font-size: 17px; line-height: 1.25;
+  letter-spacing: 0; text-transform: none; color: var(--tinto);
+}
+.on-cream .people__one figcaption b { font-weight: 400; display: block; }
+.on-cream .people__one figcaption span {
+  display: block; margin-top: 5px;
+  font-family: var(--sans); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--bronze-text-light);
+}
+@media (max-width: 520px) {
+  .people { max-width: none; }
+}
+
 .facts { position: relative; padding-top: 6px; }
 .facts dl { border-top: 1px solid var(--line-light); }
 .facts dl > div {
