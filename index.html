@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Gaucho Tirana · Argentinian Steak House</title>
+  <meta name="description" content="The first Argentinian restaurant in Tirana. Black Angus cuts grilled over wood, a wine cellar inside a dictatorship-era tunnel, and La Sierra Cocteleria. St. Mustafa Qosja, Tirana.">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="El Gaucho Tirana · Argentinian Steak House">
+  <meta property="og:description" content="The first Argentinian restaurant in Tirana. Black Angus over wood fire, a cellar in a dictatorship-era tunnel, and a table waiting.">
+  <meta property="og:image" content="assets/img/steak-fork.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Ibarra+Real+Nova:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css?v=57">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+  <!-- ============ ENTRANCE VEIL — the rider is the only overture ============ -->
+  <div class="loader" id="loader" aria-hidden="true"></div>
+
+  <!-- ============ CURSOR ============ -->
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
+    <a class="nav__brand" href="#hero" aria-label="El Gaucho Tirana, back to the top">
+      <span class="nav__brandRider" id="navRider" aria-hidden="true"></span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#cortes" class="nav__link">Los Cortes</a>
+      <a href="#cocina" class="nav__link">La Cocina</a>
+      <a href="#cantina" class="nav__link">La Cantina</a>
+      <a href="#sierra" class="nav__link">La Sierra</a>
+    </nav>
+    <div class="nav__right">
+      <a href="tel:+355696098888" class="nav__phone">+355 69 609 8888</a>
+      <a href="https://book.altaste.com/place/el-gaucho" target="_blank" rel="noopener" class="btn btn--brasa nav__book">Book a table</a>
+      <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+    <span class="nav__thread" id="navThread" aria-hidden="true"></span>
+  </header>
+
+  <!-- Mobile overlay menu -->
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <nav class="menu-overlay__links" aria-label="Menu">
+      <a href="#cortes" class="menu-overlay__link"><em>Los Cortes</em><span>The grill</span></a>
+      <a href="#cocina" class="menu-overlay__link"><em>La Cocina</em><span>The kitchen</span></a>
+      <a href="#cantina" class="menu-overlay__link"><em>La Cantina</em><span>The tunnel cellar</span></a>
+      <a href="#sierra" class="menu-overlay__link"><em>La Sierra</em><span>Cocteleria</span></a>
+      <a href="#visit" class="menu-overlay__link"><em>Visítanos</em><span>Find us</span></a>
+    </nav>
+    <a href="https://book.altaste.com/place/el-gaucho" target="_blank" rel="noopener" class="btn btn--brasa">Book a table</a>
+  </div>
+
+  <main id="main">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="hero">
+      <div class="hero__grain" aria-hidden="true"></div>
+      <canvas class="hero__embers" id="emberCanvas" aria-hidden="true"></canvas>
+
+      <div class="hero__grid">
+        <div class="hero__content">
+          <div class="hero__rider" id="heroRider" aria-hidden="true"></div>
+          <p class="hero__eyebrow" id="heroEyebrow">Tirana &middot; Argentina &middot; est. at the parrilla</p>
+          <h1 class="hero__title" id="heroTitle">EL GAUCHO</h1>
+          <p class="hero__sub" id="heroSub"><em>The first Argentinian restaurant in Tirana.</em><br>
+          Black Angus over wood fire, a cellar in a dictatorship-era tunnel, and a table waiting.</p>
+          <div class="hero__cta" id="heroCta">
+            <a href="https://book.altaste.com/place/el-gaucho" target="_blank" rel="noopener" class="btn btn--brasa">Book a table</a>
+            <a href="#cortes" class="link-arrow">Meet the cuts <b>&rarr;</b></a>
+          </div>
+        </div>
+
+        <figure class="hero__plate" id="heroPlate">
+          <button class="hero__plate-btn" id="heroPlateBtn" type="button" aria-label="Show the next dish">
+            <span class="hero__plate-img">
+              <img id="plateNext" src="" alt="" aria-hidden="true">
+              <img id="plateCur" src="assets/img/steak-plate.jpg" alt="Sliced steak plated with grilled vegetables">
+            </span>
+          </button>
+          <figcaption id="plateCap">Bife &middot; a la parrilla</figcaption>
+        </figure>
+      </div>
+
+    </section>
+
+    <!-- ============ MANIFESTO ============ -->
+    <section class="manifesto on-cream" id="about">
+      <div class="manifesto__grid">
+
+        <div class="manifesto__text">
+          <p class="label reveal-label"><i>I</i>The story</p>
+          <h2 class="manifesto__lines" data-lines>
+            Born from love at first sight on a trip to Argentina.
+            Raised in a quiet green corner of Tirana, near the Dinamo Stadium,
+            where the only thing allowed to be loud is the fire.
+          </h2>
+          <p class="body dropcap reveal-up">Chef <strong>Sergio Nallino</strong> brought ten years of experience and his grandmother's recipes from Argentina. Sommelier and co-founder <strong>Fation Tila</strong> chose every label in the cellar. The asado does the rest. It has always been a reason to sit together, family and friends, with a good glass of Malbec.</p>
+
+          <blockquote class="pull reveal-up">
+            <p>A steak on a real parrilla takes about forty minutes.</p>
+            <cite>Start with the empanadas. That is what the wait is for.</cite>
+          </blockquote>
+
+          <p class="body body--muted reveal-up">We cook over wood and let the meat rest before it reaches you. Nothing on the grill is hurried, and nothing arrives at the table before it is ready.</p>
+          <div class="gaucho-seal" id="creamSeal" aria-hidden="true"></div>
+        </div>
+
+        <aside class="facts reveal-up" aria-label="The house, in brief">
+          <dl>
+            <div><dt>La cocina</dt><dd>Sergio Nallino<span>Chef &middot; ten years, and his grandmother's recipes</span></dd></div>
+            <div><dt>La cantina</dt><dd>Fation Tila<span>Sommelier &amp; co-founder &middot; every label his own choice</span></dd></div>
+            <div><dt>El fuego</dt><dd>Le&ntilde;a<span>Black Angus over wood, never gas</span></dd></div>
+            <div><dt>La casa</dt><dd>Tirana<span>A quiet corner by the Dinamo Stadium</span></dd></div>
+          </dl>
+        </aside>
+
+        <div class="manifesto__media">
+          <figure class="plate reveal-frame" data-speed="0.94">
+            <div class="plate__img"><img src="assets/img/chef-fire.jpg" alt="The chef working the charcoal grill, smoke curling through the pass" loading="lazy"></div>
+            <figcaption>La parrilla &middot; el pase</figcaption>
+          </figure>
+          <figure class="plate plate--inset reveal-frame" data-speed="1.05">
+            <div class="plate__img"><img src="assets/img/tbone-salt.jpg" alt="Salt falling over a dry-aged T-bone standing upright on black" loading="lazy"></div>
+            <figcaption>Sal gruesa &middot; antes del fuego</figcaption>
+          </figure>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============ MARQUEE BREAK ============ -->
+    <div class="marquee marquee--big" aria-hidden="true">
+      <div class="marquee__track marquee__track--reverse">
+        <span>La parrilla está lista&ensp;·&ensp;the grill is ready&ensp;·&ensp;</span>
+        <span>La parrilla está lista&ensp;·&ensp;the grill is ready&ensp;·&ensp;</span>
+      </div>
+    </div>
+
+    <!-- ============ LOS CORTES — THE ANIMAL ============ -->
+    <section class="cortes" id="cortes">
+      <div class="container">
+        <p class="label reveal-label"><i>II</i>Los cortes &middot; Black Angus</p>
+
+        <div class="cortes__head">
+          <h2 class="cortes__title reveal-up">Fourteen cuts.<br><em>One animal.</em></h2>
+          <div class="cortes__intro reveal-up">
+            <p class="body">Butchery follows bone and muscle, never a grid. Eleven cuts are taken from the surface, two from inside the ribcage, and one is the sheet that lies between hide and rib.</p>
+            <div class="layers" role="group" aria-label="Which layer of the animal">
+              <button type="button" class="layers__btn is-on" data-layer="surface">Superficie</button>
+              <button type="button" class="layers__btn" data-layer="deep">Profundo</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="cortes__stage">
+          <div class="cow" id="cow" aria-hidden="true"></div>
+          <ul class="cutlist" id="cutlist"></ul>
+        </div>
+
+        <div class="cutpanel" id="cutpanel" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ============ LA COCINA ============ -->
+    <section class="cocina" id="cocina">
+      <div class="container">
+        <div class="cocina__head">
+          <div>
+            <p class="label label--dark reveal-label"><i>III</i>La cocina &middot; the kitchen</p>
+            <h2 class="h2 reveal-up">Icons of Argentina,<br><em>written by hand.</em></h2>
+            <p class="body reveal-up">Empanadas, provoleta, morcilla and chorizo, the icons a country of immigrants handed down, beside our chefs' own creations where Argentine and European ingredients meet. To finish, dulce de leche in every form Argentina loves it.</p>
+          </div>
+          <figure class="plate cocina__lead reveal-frame">
+            <div class="plate__img"><img src="assets/img/chorizo.jpg" alt="House chorizo criollo coil with salsa and grilled bread" loading="lazy"></div>
+            <figcaption>Chorizo criollo &middot; para compartir</figcaption>
+          </figure>
+        </div>
+
+        <div class="cocina__cols">
+          <div class="cocina__menu">
+            <h3 class="cocina__cat reveal-up">Las entradas</h3>
+            <ul class="menu-list">
+              <li class="menu-item reveal-item"><span class="menu-item__name">Empanada de carne <i>Black Angus, red pepper, onion &middot; per piece</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">250 L</span></li>
+              <li class="menu-item reveal-item"><span class="menu-item__name">Carpaccio de Black Angus <i>kogi, yuzu &amp; truffle pearls</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">1.200 L</span></li>
+              <li class="menu-item reveal-item"><span class="menu-item__name">Tartare de Black Angus <i>capers, quail egg</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">1.350 L</span></li>
+              <li class="menu-item reveal-item"><span class="menu-item__name">Picaña aguachile <i>sage, gentle heat</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">1.200 L</span></li>
+              <li class="menu-item reveal-item"><span class="menu-item__name">Tabla de quesos y embutidos <i>jamón ibérico, morcón, zamorano</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">1.800 L</span></li>
+            </ul>
+
+            <h3 class="cocina__cat reveal-up">Fideos, paella y más</h3>
+            <ul class="menu-list">
+              <li class="menu-item reveal-item"><span class="menu-item__name">El Tano <i>linguine, roast beef, quail egg</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">950 L</span></li>
+              <li class="menu-item reveal-item"><span class="menu-item__name">El Gaucho <i>tagliatelle, asparagus, rump steak</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">1.300 L</span></li>
+              <li class="menu-item reveal-item"><span class="menu-item__name">Paella <i>for two · jamón ibérico, picanha</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">2.800 L</span></li>
+              <li class="menu-item reveal-item"><span class="menu-item__name">Hamburguesa "El Gaucho" <i>140g Black Angus</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">1.450 L</span></li>
+              <li class="menu-item reveal-item"><span class="menu-item__name">Milanesa a la pizza <i>burrata, basil</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">1.600 L</span></li>
+            </ul>
+
+            <h3 class="cocina__cat reveal-up">Postres</h3>
+            <ul class="menu-list">
+              <li class="menu-item reveal-item"><span class="menu-item__name">Churros forever <i>dulce de leche, caramel namelaka</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">450 L</span></li>
+              <li class="menu-item reveal-item"><span class="menu-item__name">Flan con dulce de leche</span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">500 L</span></li>
+              <li class="menu-item reveal-item"><span class="menu-item__name">Semifreddo chocotorta</span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">550 L</span></li>
+              <li class="menu-item reveal-item"><span class="menu-item__name">Don Pedro <i>vanilla ice cream, bourbon</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">700 L</span></li>
+            </ul>
+
+          </div>
+
+          <div class="cocina__gallery">
+            <figure class="plate reveal-frame" data-speed="1.05">
+              <div class="plate__img"><img src="assets/img/bresaola-dark.jpg" alt="Cured Black Angus sliced thin on a dark plate" loading="lazy"></div>
+              <figcaption>Bresaola de la casa</figcaption>
+            </figure>
+            <figure class="plate plate--square reveal-frame" data-speed="0.97">
+              <div class="plate__img"><img src="assets/img/roscon-pour.jpg" alt="Warm caramel poured over the Roscón del Rey" loading="lazy"></div>
+              <figcaption>Rosc&oacute;n &middot; dulce de leche</figcaption>
+            </figure>
+          </div>
+        </div>
+        <div class="cocina__tasting reveal-up">
+          <p class="label label--dark">Degustemos Argentina</p>
+          <p class="body">Savour Argentina in one sitting: cold trio, hot trio, entraña &amp; bife de chorizo from the grill, and two desserts. <strong>4.200 L</strong> per person.</p>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LA CANTINA THE TUNNEL ============ -->
+    <section class="cantina" id="cantina">
+      <div class="cantina__pin" id="cantinaPin">
+
+        <div class="tunnel" id="tunnel" aria-hidden="true">
+          <svg class="tunnel__rails" viewBox="0 0 1000 860" preserveAspectRatio="none">
+            <path id="railL" d="M 60 860 L 466 488" fill="none"/>
+            <path id="railR" d="M 940 860 L 534 488" fill="none"/>
+          </svg>
+          <div class="t3d">
+            <div class="t3d__world" id="t3dWorld">
+              <div class="t3d__plane t3d__wallL"></div>
+              <div class="t3d__plane t3d__wallR"></div>
+              <div class="t3d__plane t3d__floor"></div>
+              <div class="t3d__plane t3d__vault t3d__vaultC"></div>
+              <div class="t3d__plane t3d__vault t3d__vaultL1"></div>
+              <div class="t3d__plane t3d__vault t3d__vaultR1"></div>
+              <div class="t3d__plane t3d__vault t3d__vaultL2"></div>
+              <div class="t3d__plane t3d__vault t3d__vaultR2"></div>
+              <div class="t3d__seg" style="--lampx:-31%"></div>
+              <div class="t3d__seg" style="--lampx:31%"></div>
+              <div class="t3d__seg" style="--lampx:-31%"></div>
+              <div class="t3d__seg" style="--lampx:31%"></div>
+              <div class="t3d__seg" style="--lampx:-31%"></div>
+              <div class="t3d__seg" style="--lampx:31%"></div>
+              <div class="t3d__seg" style="--lampx:-31%"></div>
+              <div class="t3d__seg" style="--lampx:31%"></div>
+              <div class="t3d__seg" style="--lampx:-31%"></div>
+              <span class="tunnel__label" style="--px:-30vw;--ry:56deg">Catena Zapata &middot; Mendoza</span>
+              <span class="tunnel__label" style="--px:30vw;--ry:-56deg">Adrianna Vineyard 2014</span>
+              <span class="tunnel__label" style="--px:-30vw;--ry:56deg">El Enemigo &middot; Uco</span>
+              <span class="tunnel__label" style="--px:30vw;--ry:-56deg">Colom&eacute; &middot; Altura M&aacute;xima</span>
+              <span class="tunnel__label" style="--px:-30vw;--ry:56deg">Rutini &middot; Gran Malbec</span>
+              <span class="tunnel__label" style="--px:30vw;--ry:-56deg">Gaja &middot; Barbaresco</span>
+              <span class="tunnel__label" style="--px:-30vw;--ry:56deg">Sassicaia &middot; Bolgheri</span>
+              <span class="tunnel__label" style="--px:30vw;--ry:-56deg">Dom P&eacute;rignon 2013</span>
+            </div>
+          </div>
+          <div class="tunnel__fog"></div>
+        </div>
+
+        <div class="descent__rail" id="descentRail" aria-hidden="true">
+          <span>nivel 0 &middot; la sala</span>
+          <span>bajo tierra</span>
+          <span>nivel &minus;1 &middot; el t&uacute;nel</span>
+          <i class="descent__thumb" id="descentThumb"></i>
+        </div>
+
+        <div class="tunnel__beat1" id="tunnelBeat1">
+          <p class="label"><i>IV</i>La cantina &middot; the cellar</p>
+          <h2 class="cantina__title">Beneath the restaurant runs a refuge-tunnel from the dictatorship years. We filled it with wine.</h2>
+          <p class="body">The dictatorship left a refuge under the dining room with the exact conditions wine wants. It now holds the whole collection, and sommelier and co-founder <strong>Fation Tila</strong> chose every label in it.</p>
+        </div>
+
+        <div class="tunnel__vault" id="tunnelVault">
+          <div class="vault__photos">
+            <figure class="vault__arch vault__arch--side"><img src="assets/img/wine-still.jpg" alt="Two glasses of wine in low raking light" loading="lazy"></figure>
+            <figure class="vault__arch vault__arch--main"><img src="assets/img/sommelier-bottles.jpg" alt="Our sommelier carrying four bottles of Catena Zapata" loading="lazy"></figure>
+            <figure class="vault__arch vault__arch--side"><img src="assets/img/strip-cellar-pour.jpg" alt="A wine pour in the cellar light" loading="lazy"></figure>
+          </div>
+          <div class="vault__text">
+            <p class="cantina__fact"><span class="stat__num" data-count="80">80</span> labels you cannot pour anywhere else in Albania. The restaurant brings them in itself from Argentina, Chile and Uruguay, and keeps a hundred and fifty more beside them.</p>
+            <p class="body body--muted">When you come, <em>ask for Fation</em>. He will walk you down the tunnel and choose the bottle with you.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============ LA SIERRA ============ -->
+    <section class="sierra soul" id="sierra">
+      <div class="sierra__grid">
+        <figure class="sierra__media reveal-frame">
+          <img src="assets/img/sierra-old-fashioned.jpg" alt="An amber cocktail with a chili garnish at the candlelit bar of La Sierra" loading="lazy">
+        </figure>
+        <div class="sierra__text">
+          <p class="label reveal-label"><i>V</i>La Sierra &middot; tapas y cocteleria</p>
+          <h2 class="h2 reveal-up">Travel toward taste, emotions and <em>sounds of Latin America.</em></h2>
+          <p class="body body--muted reveal-up">Our bar pours the continent country by country, Argentina to Cuba, with tapas from El Gaucho's kitchen on the side.</p>
+          <ul class="sierra__list">
+            <li class="menu-item reveal-item"><span class="menu-item__name">Fernet Cola <i>Argentina</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">550 L</span></li>
+            <li class="menu-item reveal-item"><span class="menu-item__name">Evita <i>bourbon, calvados, cinnamon</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">650 L</span></li>
+            <li class="menu-item reveal-item"><span class="menu-item__name">Pisco Sour <i>Peru</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">600 L</span></li>
+            <li class="menu-item reveal-item"><span class="menu-item__name">Che Guevara <i>hibiscus tequila, Grand Marnier</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">600 L</span></li>
+            <li class="menu-item reveal-item"><span class="menu-item__name">La Mendozina <i>Malamado fortified Malbec</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">700 L</span></li>
+            <li class="menu-item reveal-item"><span class="menu-item__name">Coco Loco <i>Colombia · rum, vodka, tequila, coconut</i></span><b class="menu-item__lead" aria-hidden="true"></b><span class="menu-item__price">700 L</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="marquee marquee--sierra" aria-hidden="true">
+        <div class="marquee__track">
+          <span>Paloma&ensp;·&ensp;Caipirinha&ensp;·&ensp;Mojito&ensp;·&ensp;Daiquiri&ensp;·&ensp;Margarita&ensp;·&ensp;Chilcano&ensp;·&ensp;Guarapita&ensp;·&ensp;San Martín&ensp;·&ensp;Serena Libre&ensp;·&ensp;</span>
+          <span>Paloma&ensp;·&ensp;Caipirinha&ensp;·&ensp;Mojito&ensp;·&ensp;Daiquiri&ensp;·&ensp;Margarita&ensp;·&ensp;Chilcano&ensp;·&ensp;Guarapita&ensp;·&ensp;San Martín&ensp;·&ensp;Serena Libre&ensp;·&ensp;</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TANGO ============ -->
+    <section class="tango on-cream" id="tango">
+      <div class="tango__grid">
+        <div class="tango__text">
+          <p class="label reveal-label"><i>VI</i>Las noches &middot; live</p>
+          <h2 class="h2 reveal-up">Tango nights with <em>Los Cardenales.</em></h2>
+          <p class="body body--muted reveal-up">The band we created ourselves, so the room could sound like Buenos Aires feels. Ask about the next tango night when you book.</p>
+        </div>
+        <figure class="tango__media frame reveal-frame" data-speed="1.05">
+          <img src="assets/img/tango-sign.jpg" alt="Hand-painted fileteado Tango sign on the brick wall" loading="lazy">
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ GALLERY LOOP ============ -->
+    <section class="filmstrip" id="filmstrip" aria-label="Gallery">
+      <div class="filmstrip__row" id="filmstripRow">
+        <figure><img src="assets/img/strip-table-noir.jpg" alt="A set table waiting in low light" loading="lazy"></figure>
+        <figure><img src="assets/img/strip-fire-skewer.jpg" alt="Flame licking a skewer on the parrilla" loading="lazy"></figure>
+        <figure><img src="assets/img/strip-grill-glaze.jpg" alt="Glazing the meat over the coals" loading="lazy"></figure>
+        <figure><img src="assets/img/strip-jamon-carve.jpg" alt="Carving jamón by hand" loading="lazy"></figure>
+        <figure><img src="assets/img/strip-provoleta.jpg" alt="Provoleta pans on the candlelit brick ledge" loading="lazy"></figure>
+        <figure><img src="assets/img/strip-light-room.jpg" alt="A shaft of light across the dining room" loading="lazy"></figure>
+        <figure><img src="assets/img/strip-server-plates.jpg" alt="A server emerging with plates" loading="lazy"></figure>
+        <figure><img src="assets/img/strip-cellar-pour.jpg" alt="A wine pour in the cellar light" loading="lazy"></figure>
+        <figure><img src="assets/img/strip-tartare-bite.jpg" alt="The first bite of the tartare" loading="lazy"></figure>
+        <figure><img src="assets/img/strip-churros.jpg" alt="Churros with dulce de leche to finish" loading="lazy"></figure>
+      </div>
+    </section>
+
+    <!-- ============ TESTIMONIALS ============ -->
+    <section class="quotes on-cream" id="quotes">
+      <div class="container container--narrow">
+        <p class="label reveal-label"><i>VII</i>Palabra de los invitados</p>
+        <div class="quotes__stage" id="quotesStage">
+          <blockquote class="quote is-active">
+            <p>“The food is really tasty, made with passion and special care&hellip; Definitely a must visit if you are in Town.”</p>
+            <cite>Olta Canka</cite>
+          </blockquote>
+          <blockquote class="quote">
+            <p>“Non potevamo scegliere posto migliore dove poter cenare. Il posto vale 5 stelle, se non di più&hellip; Carne ottima sia cottura che sapore.”</p>
+            <cite>Rosario Ciulla <span class="quote__gloss">“We could not have chosen a better place to dine. Five stars, if not more.”</span></cite>
+          </blockquote>
+          <blockquote class="quote">
+            <p>“Everything was delicious. Also very nice and comfortable place with excellent service staff, friendly and helpful! Highly recommended.”</p>
+            <cite>Roceta</cite>
+          </blockquote>
+        </div>
+        <div class="quotes__hoof" id="quotesHoof" aria-hidden="true"></div>
+        <div class="quotes__dots" id="quotesDots" aria-label="Testimonials">
+          <button aria-label="Quote 1" aria-current="true"><i></i></button>
+          <button aria-label="Quote 2"><i></i></button>
+          <button aria-label="Quote 3"><i></i></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ VISIT ============ -->
+    <section class="visit soul" id="visit">
+      <figure class="visit__media" data-kenburns>
+        <img src="assets/img/facade-night.jpg" alt="El Gaucho's backlit sign over the entrance at night" loading="lazy">
+      </figure>
+      <div class="visit__panel">
+        <p class="label reveal-label"><i>VIII</i>Visítanos &middot; find us</p>
+        <h2 class="h2 reveal-up">The quiet street<br>with the <em>loud grill.</em></h2>
+        <ul class="visit__facts">
+          <li class="reveal-item"><span>Address</span><a href="https://goo.gl/maps/eUxF9t29FRUbKLYq7" target="_blank" rel="noopener">St. Mustafa Qosja, 1001 Tirana, near Dinamo Stadium</a></li>
+          <li class="reveal-item"><span>Hours</span><b>Mon – Sun &middot; 12:00 – 23:00</b></li>
+          <li class="reveal-item"><span>Phone / WhatsApp</span><a href="tel:+355696098888">+355 69 609 8888</a></li>
+          <li class="reveal-item"><span>Email</span><a href="mailto:elgauchotirana@gmail.com">elgauchotirana@gmail.com</a></li>
+          <li class="reveal-item"><span>Delivery</span><b>Wolt, Baboon, Foodini and Orderoo, or call us</b></li>
+        </ul>
+        <div class="visit__cta reveal-up reveal-up--focusable">
+          <a href="https://book.altaste.com/place/el-gaucho" target="_blank" rel="noopener" class="btn btn--brasa">Book a table</a>
+          <a href="https://goo.gl/maps/eUxF9t29FRUbKLYq7" target="_blank" rel="noopener" class="link-arrow">Open the map <b>&rarr;</b></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer soul">
+      <div class="footer__giant" aria-hidden="true">
+        <div class="marquee__track marquee__track--slow">
+          <span>EL GAUCHO&ensp;·&ensp;EL GAUCHO&ensp;·&ensp;</span>
+          <span>EL GAUCHO&ensp;·&ensp;EL GAUCHO&ensp;·&ensp;</span>
+        </div>
+      </div>
+      <div class="footer__inner">
+        <div class="footer__gaucho" id="footerGaucho" role="button" tabindex="0" aria-label="Ride back to the top"><img class="footer__logo" src="assets/img/logo.png" alt="El Gaucho · Argentinian Steak House" width="220"></div>
+        <nav class="footer__links" aria-label="Footer">
+          <a href="#cortes">Los Cortes</a>
+          <a href="#cocina">La Cocina</a>
+          <a href="#cantina">La Cantina</a>
+          <a href="#sierra">La Sierra</a>
+          <a href="#visit">Visit</a>
+        </nav>
+        <div class="footer__social">
+          <a href="https://www.instagram.com/el_gaucho_tirana/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/profile.php?id=100063536110215" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://www.tripadvisor.com/Restaurant_Review-g294446-d23295845-Reviews-El_Gaucho_Tirana-Tirana_Tirana_County.html" target="_blank" rel="noopener">TripAdvisor</a>
+        </div>
+        <p class="footer__fine">© 2026 El Gaucho Tirana &middot; The first Argentinian restaurant in Tirana &middot; <em>buen provecho</em></p>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="assets/js/lc-art.js"></script>
+  <script src="assets/js/gaucho-data.js?v=4"></script>
+  <script src="assets/js/gaucho-logo.js?v=5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" onerror="document.documentElement.classList.remove('js')"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollToPlugin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+  <script src="assets/js/main.js?v=78"></script>
+</body>
+</html>
